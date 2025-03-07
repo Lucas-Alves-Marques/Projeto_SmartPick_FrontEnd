@@ -4,7 +4,7 @@ import Style from './Listagem.module.css'
 function Listagem() {
   return (
 
-    <div className={Style.lista}>
+    <div>
 
       <h1>Listagem</h1>
 

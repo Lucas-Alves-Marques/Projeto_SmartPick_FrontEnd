@@ -1,0 +1,57 @@
+.navegacao{
+    display: flex;
+    justify-content: space-between;
+    background-color: #048c6b;
+    color: white;
+    padding: 3vh;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.logo{
+    height: 10vh;
+    margin-right: 1vh;
+}
+
+.titulo{
+    display: flex;
+    align-items: center;
+    margin-top: -1vh;
+}
+
+.navegacao h1{
+    font-size: 5vh;
+    margin-top: 4vh;
+}
+
+.navegacao ul{
+    display: flex;
+    color: white;
+    list-style: none;
+    font-size: 3vh;
+    margin-top: 4vh;
+}
+
+.navegacao ul li {
+    margin: 0vh 1vh;
+    color: white;
+    padding: 1vh;
+    text-decoration: none;
+    border-radius: 1vh;
+}
+
+.navegacao ul Link{
+    text-decoration: none;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+.navegacao ul li:hover{
+    background-color: white;
+    color: black;
+    transition: 0.5s;
+}
+
