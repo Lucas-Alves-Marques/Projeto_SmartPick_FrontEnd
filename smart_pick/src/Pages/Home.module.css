@@ -30,3 +30,19 @@
 span{
     color:  #005a44;
 }
+
+.btn{
+    background-color: #048c6b;
+    color: white;
+    border: none;
+    padding: 1vh;
+    margin-top: 2vh;
+    border-radius: 1.5vh;
+    font-size: 2.5vh;
+    font-weight: bold;
+    width: 20vh;
+}
+
+.btn a{
+    color: white;
+}

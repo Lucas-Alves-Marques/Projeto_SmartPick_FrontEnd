@@ -5,6 +5,7 @@ import Cadastro from "./Pages/Casdastro";
 import Listagem from "./Pages/Listagem";
 import Home from "./Pages/Home";
 import Container from "./Layout/Container";
+import Footer from "./Layout/Footer";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           </Routes>
 
         </Container>
+          
+        <Footer/>
         
       </BrowserRouter>
     </div>
