@@ -8,18 +8,25 @@ import Container from "./Layout/Container";
 
 function App() {
   return (
-    <div>
+    <div className='body'>
       <BrowserRouter>
+
+        <NavBar />
+
         <Container>
-          <NavBar />
+
           <Routes>
+
             <Route path="/" element={<Home />} />
 
             <Route path="/cadastro" element={<Cadastro />} />
 
             <Route path="/listagem" element={<Listagem />} />
+
           </Routes>
+
         </Container>
+        
       </BrowserRouter>
     </div>
   );
