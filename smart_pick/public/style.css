@@ -1,3 +1,12 @@
 body{
     background-color: #35947c7e;
+    background-image: url('./Fundo\ do\ Projeto.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+#root{
+    height: 100vh;
 }
