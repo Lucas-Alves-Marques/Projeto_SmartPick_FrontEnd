@@ -34,14 +34,23 @@ function Cadastro() {
 
         {categoria === 1 &&
 
-          <button onClick={(e) => { e.preventDefault(); setCategoria(2) }}>Por Combinação</button>
+          <>
+
+            <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); setCategoria(2) }}>Por Combinação</button>
+            <button className={Style.btnSave}>Salvar</button>
+
+          </>
 
         }
 
         {categoria === 2 &&
 
-          <button onClick={(e) => { e.preventDefault(); setCategoria(1) }}>Sorteio Simples</button>
+          <>
 
+            <button  className={Style.bntDefault} onClick={(e) => { e.preventDefault(); setCategoria(1) }}>Sorteio Simples</button>
+            <button className={Style.btnSave} onClick={(e)=>{e.preventDefault()}}>Salvar</button>
+
+          </>
 
         }
 

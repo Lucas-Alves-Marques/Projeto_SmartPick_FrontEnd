@@ -11,12 +11,16 @@
 }
 
 .titulo{
-    background-color: rgba(255, 0, 0, 0);
+    background-color: #004370;
     color: white;
     text-align: center;
     border: none;
     font-size: 5vh;
     margin-bottom: 2vh;
+    border-radius: 3vh;
+    font-weight: bold;
+    border: 0.4vh solid white;
+
 }
 
 .titulo::placeholder{
@@ -41,7 +45,7 @@
     margin-top: 2vh;
 }
 
-.bnts button{
+.bntDefault{
     height: 6vh;
     width: 15vh;
     text-align: center;
@@ -50,4 +54,23 @@
     border: 0.4vh solid white;
     color: white;
     margin-right: 2vh;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btnSave{
+    height: 6vh;
+    width: 15vh;
+    text-align: center;
+    background-color: #0080cfb0;
+    border-radius: 1vh;
+    border: 0.4vh solid white;
+    color: white;
+    margin-right: 2vh;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btnSave:hover{
+    background-color: rgb(20, 165, 20);
 }
