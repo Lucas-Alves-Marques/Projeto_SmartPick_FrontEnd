@@ -1,0 +1,42 @@
+.navegacao {
+    display: flex;
+    justify-content: center;
+    background-color: #00437079;
+    color: white;
+    padding: 1.5vh 0vh;
+    backdrop-filter: blur(3px);
+    text-align: center;
+}
+
+.navegacao ul {
+    display: flex;
+    color: white;
+    list-style: none;
+    font-size: 2.5vh;
+}
+
+.item {
+    margin: 0vh 5vh;
+    color: white;
+    padding: 1vh;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.item_marcado{
+    
+    margin: 0vh 5vh;
+    color: white;
+    padding: 1vh;
+    text-decoration: none;
+    box-shadow: 0px 2.5px 0px rgb(255, 255, 255);
+}
+
+.navegacao ul li:hover {
+
+    box-shadow: 0px 2.5px 0px rgb(255, 255, 255);
+    transition: 0.3s ease-in-out;
+}

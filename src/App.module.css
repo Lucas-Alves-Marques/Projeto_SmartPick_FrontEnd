@@ -1,0 +1,10 @@
+.body{
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+
+

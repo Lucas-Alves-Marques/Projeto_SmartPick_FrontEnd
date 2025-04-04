@@ -1,0 +1,29 @@
+.body{
+    color: white;
+    padding: 5vh 2vh;
+    background-color: #00437079;
+    backdrop-filter: blur(3px);
+    border-radius: 5vh;
+}
+
+.titulo{
+    background-color: rgba(255, 0, 0, 0);
+    color: white;
+    text-align: center;
+    border: none;
+    font-size: 5vh;
+    margin-bottom: 2vh;
+}
+
+.titulo::placeholder{
+    color: white;
+    font-size: 5vh;
+    font-weight: bold;
+
+}
+
+.botao{
+    /* display: flex; */
+    background-color: antiquewhite;
+    align-items: start;
+}

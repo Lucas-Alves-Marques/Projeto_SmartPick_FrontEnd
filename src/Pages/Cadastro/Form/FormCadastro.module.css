@@ -1,0 +1,23 @@
+.form{
+    display: flex;
+    justify-content: center;
+    padding: 2vh;
+    background-color: #0080cfb0;
+    border-radius: 2vh;
+}
+
+.form input{
+    font-size: 3.5vh;
+    background-color: rgba(255, 0, 0, 0);
+    color: white;
+    text-align: center;
+    border: none;
+    margin-bottom: 2vh;
+
+}
+
+.form input::placeholder{
+    color: white;
+    font-size: 3vh;
+    font-weight: bold;
+}
