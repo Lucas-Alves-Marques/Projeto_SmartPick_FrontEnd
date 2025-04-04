@@ -1,9 +1,13 @@
 .form{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 2vh;
     background-color: #0080cfb0;
     border-radius: 2vh;
+    border: 0.4vh solid white;
+    margin-right: 2vh;
+
 }
 
 .form input{
@@ -13,6 +17,7 @@
     text-align: center;
     border: none;
     margin-bottom: 2vh;
+    width: auto;
 
 }
 
@@ -20,4 +25,8 @@
     color: white;
     font-size: 3vh;
     font-weight: bold;
+}
+
+.form button{
+
 }

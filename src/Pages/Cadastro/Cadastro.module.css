@@ -4,6 +4,10 @@
     background-color: #00437079;
     backdrop-filter: blur(3px);
     border-radius: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .titulo{
@@ -22,8 +26,28 @@
 
 }
 
-.botao{
-    /* display: flex; */
-    background-color: antiquewhite;
-    align-items: start;
+.forms{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2vh;
+}
+
+.bnts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+.bnts button{
+    height: 6vh;
+    width: 15vh;
+    text-align: center;
+    background-color: #0080cfb0;
+    border-radius: 1vh;
+    border: 0.4vh solid white;
+    color: white;
+    margin-right: 2vh;
 }

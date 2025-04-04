@@ -1,8 +1,6 @@
 import React, { use, useState } from 'react';
 import Style from './Cadastro.module.css';
 
-import Input from '../../Form/Input';
-import Button from '../../Form/Button';
 import Form from './Form/FormCadastro';
 
 function Cadastro() {
@@ -16,7 +14,7 @@ function Cadastro() {
 
       <input className={Style.titulo} placeholder='Sorteio'></input>
 
-      <form>
+      <div className={Style.forms}>
 
         <Form />
 
@@ -30,19 +28,24 @@ function Cadastro() {
 
         }
 
-        <div className={Style.botao}>
+      </div>
 
-          {categoria === 1 &&
+      <div className={Style.bnts}>
 
-            <button onClick={(e) => { e.preventDefault(); setCategoria(2) }}> + </button>
+        {categoria === 1 &&
 
-          }
+          <button onClick={(e) => { e.preventDefault(); setCategoria(2) }}>Por Combinação</button>
 
-          <button onClick={(e) => { e.preventDefault(); setCategoria(1) }}> - </button>
+        }
 
-        </div>
+        {categoria === 2 &&
 
-      </form>
+          <button onClick={(e) => { e.preventDefault(); setCategoria(1) }}>Sorteio Simples</button>
+
+
+        }
+
+      </div>
     </div>
   );
 }
