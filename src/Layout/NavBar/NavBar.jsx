@@ -24,7 +24,7 @@ function NavBar() {
 
         <Link to='/listagem'>
           <li className={location === '/listagem' ? Style.item_marcado : Style.item}>
-            Listagem
+            Sorteios
           </li>
         </Link>
       </ul>

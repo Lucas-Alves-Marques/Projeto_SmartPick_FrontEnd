@@ -8,12 +8,16 @@
     backdrop-filter: blur(3px);
     border-radius: 3vh;
     color: white;
+    border: 0.4vh solid white;
+
 }
 
 .img{
     width: 30vh;
     margin-bottom: 2vh;
     border-radius: 5vh;
+    border: 0.4vh solid white;
+
 }
 
 .text{
@@ -49,6 +53,8 @@ span{
     font-weight: bold;
     width: 20vh;
     margin: auto;
+    border: 0.4vh solid white;
+
 }
 
 .btn a{
