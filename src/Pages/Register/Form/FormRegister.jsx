@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import style from './FormRegister.module.css'
 
-function Form({ idCategory, action }) {
+function Form({handleTitleC}) {
 
     const [items, setItems] = useState([])
     const lastItem = useRef(null);
@@ -32,12 +32,13 @@ function Form({ idCategory, action }) {
     return (
         <form className={style.form}>
 
-            <input id={idCategory} className={style.inputSubt} placeholder="Categoria" onChange={action} required></input>
+            <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC}></input>
             <ul>
 
                 <li>
 
-                    <input placeholder='item 1' id={`${idCategory}-item1`} onChange={action}></input>
+                    {/* <input placeholder='item 1' id={`${idCategory}-item1`} onChange={action}></input> */}
+                    <input placeholder='item 1' ></input>
 
                 </li>
 
@@ -46,7 +47,8 @@ function Form({ idCategory, action }) {
                     return (
 
                         <li key={index}>
-                            <input id={`${idCategory}-item${index + 2}`} placeholder={`item ${index + 2}`} onChange={action} required></input>
+                            {/* <input id={`${idCategory}-item${index + 2}`} placeholder={`item ${index + 2}`} onChange={action} required></input> */}
+                            <input placeholder={`item ${index + 2}`} required></input>
                         </li>
 
                     )

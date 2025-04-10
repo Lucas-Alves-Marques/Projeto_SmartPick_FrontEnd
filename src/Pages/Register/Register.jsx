@@ -9,6 +9,10 @@ function Register() {
 
   const [raffle, setRaffle] = useState([])
 
+  const [categories, setCategories] = useState(['',''])
+
+  const [raffleTitle, setRaffleTitle] = useState('')
+
   const [message, setMessage] = useState('')
 
   function registerRaffle(e) {
@@ -16,6 +20,43 @@ function Register() {
     e.preventDefault()
 
     setRaffle({ ...raffle, [e.target.id]: e.target.value })
+
+  }
+
+  const handleTitle = (e) =>{
+
+    setRaffleTitle(e.target.value)
+
+    console.log(raffleTitle)
+
+  }
+
+  const handleCategory = () =>{
+
+    if(categories.length == 2) {
+
+      setCategories(categories.slice(0, -1));
+    }
+
+    else{
+
+    setCategories([...categories,'1'])
+
+    }
+
+    console.log(categories)
+
+  }
+
+  const uptadeNameCategory = (index, value) =>{
+
+    const uptade = [...categories]
+
+    uptade[index] = value
+
+    setCategories(uptade)
+
+    console.log(categories)
 
   }
 
@@ -78,19 +119,15 @@ function Register() {
   return (
     <div className={Style.body}>
 
-      <input id={'raffle'} className={Style.titulo} placeholder='Sorteio' onChange={registerRaffle} required></input>
+      <input className={Style.titulo} placeholder='Sorteio' onChange={handleTitle} required></input>
 
       <div className={Style.forms}>
 
-        <Form idCategory={'category_1'} action={registerRaffle} />
+        {categories.map((cat, index)=>{
 
-        {category === 2 &&
+          return <Form key={index} handleTitleC={(e) => uptadeNameCategory(index, e.target.value)} />
 
-          <>
-
-            <Form idCategory={'category_2'} action={registerRaffle} />
-
-          </>
+        })
 
         }
 
@@ -98,22 +135,22 @@ function Register() {
 
       <div className={Style.bnts}>
 
-        {category === 1 &&
+        {categories.length < 2 &&
 
           <>
 
-            <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); setCategory(2) }}>Por Combinação</button>
+            <button className={Style.bntDefault} onClick={(e) => {e.preventDefault();handleCategory()}}>Por Combinação</button>
             <button className={Style.btnSave} onClick={saveRaffle}>Salvar</button>
 
           </>
 
         }
 
-        {category === 2 &&
+        {categories.length >= 2 &&
 
           <>
 
-            <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); setCategory(1) }}>Sorteio Simples</button>
+            <button className={Style.bntDefault} onClick={(e) => {e.preventDefault();handleCategory()}}>Sorteio Simples</button>
             <button className={Style.btnSave} onClick={saveRaffle}>Salvar</button>
 
           </>
