@@ -1,131 +1,160 @@
 import React, { useState } from 'react';
 import Style from './Register.module.css';
-
+import axios from 'axios';
 import Form from './Form/FormRegister';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 function Register() {
 
-  const [category, setCategory] = useState(1)
+  const [raffle, setRaffle] = useState({
 
-  const [raffle, setRaffle] = useState([])
+    raffleTitle: '',
+    categories: [],
+    items: {}
 
-  const [categories, setCategories] = useState(['',''])
+  })
 
-  const [raffleTitle, setRaffleTitle] = useState('')
+  const [newCategories, setNewCategories] = useState([''])
+
+  const [newRaffleTitle, setNewRaffleTitle] = useState('')
+
+  const [newItems, setNewItems] = useState({})
 
   const [message, setMessage] = useState('')
 
-  function registerRaffle(e) {
+  const handleItem = (e) => {
 
     e.preventDefault()
 
-    setRaffle({ ...raffle, [e.target.id]: e.target.value })
+    setNewItems({ ...newItems, [e.target.id]: e.target.value })
+
+    // console.log(newItems)
 
   }
 
-  const handleTitle = (e) =>{
+  const removeItem = (cate, nitem) => {
 
-    setRaffleTitle(e.target.value)
+    if (cate == 0) {
 
-    console.log(raffleTitle)
-
-  }
-
-  const handleCategory = () =>{
-
-    if(categories.length == 2) {
-
-      setCategories(categories.slice(0, -1));
-    }
-
-    else{
-
-    setCategories([...categories,'1'])
-
-    }
-
-    console.log(categories)
-
-  }
-
-  const uptadeNameCategory = (index, value) =>{
-
-    const uptade = [...categories]
-
-    uptade[index] = value
-
-    setCategories(uptade)
-
-    console.log(categories)
-
-  }
-
-  const saveRaffle = (e) => {
-
-    e.preventDefault()
-
-    if (Object.keys(raffle).length < 4) {
-
-      setMessage('Preencha pelo menos 4 campos para continuar')
-
-      return;
+      delete newItems[`Cat1_item${nitem}`];
 
     }
 
     else {
 
-      const validateField = Object.values(raffle).some(
-
-        (field) => field.trim() === ""
-
-      )
-
-      if (validateField) {
-
-        setMessage('Preencha todos os campos')
-      }
-
-      else {
-
-        if (category === 1) {
-
-          const raffleDefined = Object.fromEntries(
-
-            Object.entries(raffle).filter(([chave, _]) => chave.includes("category_1") || chave === "raffle")
-
-          );
-
-          console.log(raffleDefined)
-
-          setRaffle(raffleDefined)
-
-          setMessage('Sorteio Cadastrado')
-
-        }
-
-        else {
-          console.log(raffle)
-
-          setMessage('Sorteio Cadastrado')
-        }
-
-      }
+      delete newItems[`Cat2_item${nitem}`];
 
     }
+
+    // console.log(newItems)
+
+  };
+
+  const handleTitle = (e) => {
+
+    setNewRaffleTitle(e.target.value)
+
+    // console.log(newRaffleTitle)
+
+  }
+
+  const handleCategory = () => {
+
+    if (newCategories.length == 2) {
+
+      setNewCategories(newCategories.slice(0, -1));
+    }
+
+    else {
+
+      setNewCategories([...newCategories, '1'])
+
+    }
+
+    // console.log(newCategories)
+
+  }
+
+  const uptadeNameCategory = (index, value) => {
+
+    const uptade = [...newCategories]
+
+    uptade[index] = value
+
+    setNewCategories(uptade)
+
+    // console.log(newCategories)
+
+  }
+
+  const saveRaffle = async (e) => {
+
+    e.preventDefault()
+
+    // if (Object.keys(raffle).length < 4) {
+
+    //   setMessage('Preencha pelo menos 4 campos para continuar')
+
+    //   return;
+
+    // }
+
+    // else {
+
+    // const validateField = Object.values(raffle).some(
+
+    //   (field) => field.trim() != ""
+
+    // )
+
+    // if (validateField) {
+
+    //   setMessage('Preencha todos os campos')
+    // }
+
+    // else {
+
+    setRaffle(prev => ({
+
+      ...prev,
+
+      raffleTitle: newRaffleTitle,
+      categories: newCategories,
+      items: newItems
+
+    }))
+
+    try {
+
+      await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
+
+      setMessage('Sorteio Cadastrado')
+
+    } catch (err) {
+
+      console.log(`Erro: ${err}`)
+
+      setMessage('Erro ao Cadastrar Sorteio')
+
+    }
+
+
+
 
 
   }
 
   return (
+
     <div className={Style.body}>
 
       <input className={Style.titulo} placeholder='Sorteio' onChange={handleTitle} required></input>
 
       <div className={Style.forms}>
 
-        {categories.map((cat, index)=>{
+        {newCategories.map((cat, index) => {
 
-          return <Form key={index} handleTitleC={(e) => uptadeNameCategory(index, e.target.value)} />
+          return <Form key={index} handleTitleC={(e) => uptadeNameCategory(index, e.target.value)} category={index} functioAddItem={handleItem} functioRevItem={removeItem} />
 
         })
 
@@ -135,22 +164,22 @@ function Register() {
 
       <div className={Style.bnts}>
 
-        {categories.length < 2 &&
+        {newCategories.length < 2 &&
 
           <>
 
-            <button className={Style.bntDefault} onClick={(e) => {e.preventDefault();handleCategory()}}>Por Combinação</button>
+            <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); handleCategory() }}>Por Combinação</button>
             <button className={Style.btnSave} onClick={saveRaffle}>Salvar</button>
 
           </>
 
         }
 
-        {categories.length >= 2 &&
+        {newCategories.length >= 2 &&
 
           <>
 
-            <button className={Style.bntDefault} onClick={(e) => {e.preventDefault();handleCategory()}}>Sorteio Simples</button>
+            <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); handleCategory() }}>Sorteio Simples</button>
             <button className={Style.btnSave} onClick={saveRaffle}>Salvar</button>
 
           </>
@@ -164,7 +193,7 @@ function Register() {
         <div className={Style.message}>
 
           <h3>{message}</h3>
-          <button onClick={()=>{setMessage('')}}>Ir para Sorteios</button>
+          <button onClick={() => { setMessage(''); console.log(raffle) }}>Ir para Sorteios</button>
 
         </div>
 
