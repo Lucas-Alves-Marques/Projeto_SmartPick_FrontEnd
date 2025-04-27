@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Style from './Register.module.css';
 import axios from 'axios';
 import Form from './Form/FormRegister';
-import { wait } from '@testing-library/user-event/dist/utils';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
 
@@ -14,13 +14,17 @@ function Register() {
 
   })
 
-  const [newCategories, setNewCategories] = useState([''])
-
   const [newRaffleTitle, setNewRaffleTitle] = useState('')
+
+  const [newCategories, setNewCategories] = useState([''])
 
   const [newItems, setNewItems] = useState({})
 
   const [message, setMessage] = useState('')
+
+  const [btnMessage, setBtnMessage] = useState('')
+
+  const navigate = useNavigate()
 
   const handleItem = (e) => {
 
@@ -34,7 +38,7 @@ function Register() {
 
   const removeItem = (cate, nitem) => {
 
-    if (cate == 0) {
+    if (cate === 0) {
 
       delete newItems[`Cat1_item${nitem}`];
 
@@ -60,14 +64,14 @@ function Register() {
 
   const handleCategory = () => {
 
-    if (newCategories.length == 2) {
+    if (newCategories.length === 2) {
 
       setNewCategories(newCategories.slice(0, -1));
     }
 
     else {
 
-      setNewCategories([...newCategories, '1'])
+      setNewCategories([...newCategories, ''])
 
     }
 
@@ -91,58 +95,98 @@ function Register() {
 
     e.preventDefault()
 
-    // if (Object.keys(raffle).length < 4) {
+    const validCategoty = newCategories.some(category => category === '');
 
-    //   setMessage('Preencha pelo menos 4 campos para continuar')
+    const validItems = Object.values(newItems).every(item => item !== "");
 
-    //   return;
+    if (newRaffleTitle === '') {
 
-    // }
+      setMessage('Coloque um titulo para o seu Sorteio')
 
-    // else {
+      setBtnMessage('OK')
 
-    // const validateField = Object.values(raffle).some(
+    }
 
-    //   (field) => field.trim() != ""
+    else if (validCategoty) {
 
-    // )
+      setMessage('Defina o nome das categorias')
 
-    // if (validateField) {
+      setBtnMessage('OK')
 
-    //   setMessage('Preencha todos os campos')
-    // }
 
-    // else {
+    }
 
-    setRaffle(prev => ({
+    else if (newCategories.length === 1 && Object.keys(newItems).length < 2) {
 
-      ...prev,
+      setMessage('Coloque no minimo 2 itens')
 
-      raffleTitle: newRaffleTitle,
-      categories: newCategories,
-      items: newItems
+      setBtnMessage('OK')
 
-    }))
+    }
 
-    try {
+    else if (validItems === false) {
 
-      await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
+      setMessage('Preencha todos os items das categorias')
 
-      setMessage('Sorteio Cadastrado')
+      setBtnMessage('OK')
 
-    } catch (err) {
+      console.log(newItems)
 
-      console.log(`Erro: ${err}`)
+      console.log(validItems)
 
-      setMessage('Erro ao Cadastrar Sorteio')
+    }
+
+    else {
+
+      setRaffle(prev => ({
+
+        ...prev,
+
+        raffleTitle: newRaffleTitle,
+        categories: newCategories,
+        items: newItems
+
+      }))
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    const sendToDataBase = async () => {
+
+
+      try {
+
+        await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
+
+        console.log(raffle)
+
+        setMessage('Sorteio Cadastrado')
+
+        setBtnMessage('OK')
+
+      } catch (err) {
+
+        console.log(`Erro: ${err}`)
+
+        setMessage('Erro ao Cadastrar Sorteio')
+
+        setBtnMessage('Tentar Novamente')
+
+      }
+
+    }
+
+    if (raffle.raffleTitle && raffle.categories.length && raffle.items) {
+
+      sendToDataBase();
 
     }
 
 
-
-
-
-  }
+  }, [raffle])
 
   return (
 
@@ -188,12 +232,35 @@ function Register() {
 
       </div>
 
-      {message != '' &&
+      {message !== '' &&
 
         <div className={Style.message}>
 
           <h3>{message}</h3>
-          <button onClick={() => { setMessage(''); console.log(raffle) }}>Ir para Sorteios</button>
+
+          <button
+            onClick={(e) => {
+
+              if (message === 'Sorteio Cadastrado') {
+
+                console.log(message)
+
+                navigate('/listagem');
+
+              } else {
+
+                e.preventDefault();
+
+              }
+
+              setMessage('');
+
+            }}>
+
+            {btnMessage}
+
+          </button>
+
 
         </div>
 
@@ -204,3 +271,4 @@ function Register() {
 }
 
 export default Register;
+

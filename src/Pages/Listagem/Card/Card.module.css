@@ -1,0 +1,29 @@
+.background{
+    margin: auto;
+    display: flex;
+    padding: 5vh 0 2vh 0;
+    width: 30vh;
+    height: 20vh;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    color: white;
+    background-color: #00437079;
+    backdrop-filter: blur(3px);
+    border-radius: 5vh;
+    border: 0.5vh solid white;
+}
+
+.background h1{
+    width: 100%;
+}
+
+.icons svg{
+    height: 4vh;
+    width: 4vh;
+}
+
+.Pencil{
+    margin: 0 2vh;
+}
