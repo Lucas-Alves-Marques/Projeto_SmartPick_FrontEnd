@@ -1,4 +1,4 @@
-.body{
+.body {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -9,3 +9,22 @@
     margin: auto;
 }
 
+.background {
+    margin: auto;
+    display: flex;
+    width: 30vh;
+    height: 25vh;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    color: white;
+    background-color: #00437079;
+    backdrop-filter: blur(3px);
+    border-radius: 5vh;
+    border: 0.5vh solid white;
+}
+
+.background h1 {
+    width: 100%;
+}

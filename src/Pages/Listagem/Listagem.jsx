@@ -7,6 +7,8 @@ function Listagem() {
 
   const [registeredRaffle, setRegisteredRaffle] = useState([])
 
+  const [message, setMessage] = useState('')
+
   useEffect(() => {
 
     const getRaffles = async () => {
@@ -15,11 +17,22 @@ function Listagem() {
 
         const raffles = await axios.get('http://localhost:3000/api/raffle/listRaffleName')
 
-        setRegisteredRaffle(raffles.data.message)
+        if (raffles.data.message.length > 0) {
+
+          setRegisteredRaffle(raffles.data.message)
+
+        }
+
+        else {
+          
+          setMessage('Não há sorteios cadastrados')
+
+        }
 
       } catch (err) {
 
         console.log(err)
+        setMessage('Não há sorteios cadastrados')
 
       }
 
@@ -49,19 +62,29 @@ function Listagem() {
 
     <div className={Style.body}>
 
-      {registeredRaffle.map((raffle)=>{
 
-        return(
+      {message ?
 
-          <Card id={raffle.id_raffle} title={raffle.name} />
+        <div className={Style.background}>
 
-        )
+          <h1>{message}</h1>
 
-      })
+        </div>
 
+        :
+        registeredRaffle.map((raffle) => {
+
+          return (
+
+            <Card id={raffle.id_raffle} title={raffle.name} />
+
+          )
+
+        })
       }
 
-    </div>
+
+    </div >
   );
 }
 

@@ -142,7 +142,7 @@ function Register() {
 
         ...prev,
 
-        raffleTitle: newRaffleTitle,
+        raffleTitle: newRaffleTitle.toUpperCase(),
         categories: newCategories,
         items: newItems
 

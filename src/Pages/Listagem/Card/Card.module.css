@@ -1,9 +1,8 @@
 .background{
     margin: auto;
     display: flex;
-    padding: 5vh 0 2vh 0;
+    padding: 3vh;
     width: 30vh;
-    height: 20vh;
     text-align: center;
     align-items: center;
     justify-content: space-around;
@@ -17,6 +16,7 @@
 
 .background h1{
     width: 100%;
+    margin: 2vh 0;
 }
 
 .icons svg{
@@ -26,4 +26,9 @@
 
 .Pencil{
     margin: 0 2vh;
+}
+
+.background img{
+    border-radius: 2vh;
+    height: 15vh;
 }

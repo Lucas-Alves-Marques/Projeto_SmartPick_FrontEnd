@@ -53,7 +53,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem }) {
 
                         <li key={index}>
                             <input id={`Cat${category + 1}_item${index + 2}`} placeholder={`item ${index + 2}`} onChange={functioAddItem} required></input>
-
                         </li>
 
                     )
