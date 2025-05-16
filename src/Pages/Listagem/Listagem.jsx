@@ -3,6 +3,7 @@ import Style from './Listagem.module.css';
 import axios from "axios";
 import Card from "./Card/Card";
 
+
 function Listagem() {
 
   const [registeredRaffle, setRegisteredRaffle] = useState([])
