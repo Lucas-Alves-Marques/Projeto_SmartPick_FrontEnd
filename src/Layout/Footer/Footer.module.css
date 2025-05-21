@@ -4,6 +4,7 @@
     backdrop-filter: blur(3px);
     color: white;
     display: flex;
+    padding: 3vh 0;
 }
 
 .body h3{

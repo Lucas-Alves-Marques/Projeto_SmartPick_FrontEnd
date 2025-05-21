@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Style from './Listagem.module.css';
 import axios from "axios";
-import Card from "./Card/Card";
+import Card from "./Cards/Card_List/Card_List";
 
 
 function Listagem() {
@@ -77,7 +77,7 @@ function Listagem() {
 
           return (
 
-            <Card id={raffle.id_raffle} title={raffle.name} />
+            <Card raffle={raffle} />
 
           )
 

@@ -5,6 +5,7 @@ import Container from "./Layout/Container/Container";
 import Home from "./Pages/Home/Home";
 import Register from "./Pages/Register/Register";
 import Listagem from "./Pages/Listagem/Listagem";
+import InfoCard from './Pages/Listagem/Cards/Card_Info/Card_Info'
 import Footer from "./Layout/Footer/Footer";
 
 
@@ -24,6 +25,8 @@ function App() {
             <Route path="/cadastro" element={<Register />} />
 
             <Route path="/listagem" element={<Listagem />} />
+
+            <Route path="/info_card/:id_raffle" element={<InfoCard />} />
 
           </Routes>
 
