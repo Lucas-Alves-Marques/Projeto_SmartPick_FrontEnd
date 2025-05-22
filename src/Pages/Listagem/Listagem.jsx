@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Style from './Listagem.module.css';
 import axios from "axios";
-import Card from "./Cards/Card_List/Card_List";
+import Card from "./Card_List/Card_List";
+import ContainerRaffle from "../../Layout/Container/ContainerRaffle";
 
 
 function Listagem() {
@@ -25,7 +26,7 @@ function Listagem() {
         }
 
         else {
-          
+
           setMessage('Não há sorteios cadastrados')
 
         }
@@ -44,20 +45,6 @@ function Listagem() {
 
   }, []);
 
-  //So para ver se o sorteio está vindo
-
-  useEffect(() => {
-
-    const viewRaffle = () => {
-
-      console.log(registeredRaffle)
-
-    }
-
-    viewRaffle();
-
-
-  }, [registeredRaffle]);
 
   return (
 
@@ -73,15 +60,25 @@ function Listagem() {
         </div>
 
         :
+
         registeredRaffle.map((raffle) => {
 
           return (
 
-            <Card raffle={raffle} />
+            <div key={raffle.id_raffle}>
+
+              <ContainerRaffle>
+
+                <Card raffle={raffle}/>
+
+              </ContainerRaffle>
+
+            </div>
 
           )
 
         })
+
       }
 
 

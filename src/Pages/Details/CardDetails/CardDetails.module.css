@@ -1,0 +1,18 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vh;
+    background-color: #014a7abe;
+    border-radius: 2vh;
+    border: 0.3vh solid white;
+    margin: 0 2vh;
+    width: 20vh;
+}
+
+.card ul{
+     margin-top: 1vh;
+}
+
+.card ul li{
+    list-style: none;
+}

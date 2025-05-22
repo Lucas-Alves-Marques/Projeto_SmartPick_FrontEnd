@@ -1,12 +1,9 @@
 .body {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    padding: 10vh;
+    justify-content: center;
+    padding: 8vh;
     flex-wrap: wrap;
-    height: 100vh;
-    width: 150vh;
-    margin: auto;
 }
 
 .background {

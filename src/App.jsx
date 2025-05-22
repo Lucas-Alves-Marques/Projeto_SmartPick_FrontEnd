@@ -5,7 +5,7 @@ import Container from "./Layout/Container/Container";
 import Home from "./Pages/Home/Home";
 import Register from "./Pages/Register/Register";
 import Listagem from "./Pages/Listagem/Listagem";
-import InfoCard from './Pages/Listagem/Cards/Card_Info/Card_Info'
+import Details from './Pages/Details/Details'
 import Footer from "./Layout/Footer/Footer";
 
 
@@ -26,7 +26,7 @@ function App() {
 
             <Route path="/listagem" element={<Listagem />} />
 
-            <Route path="/info_card/:id_raffle" element={<InfoCard />} />
+            <Route path="/info_card/:id_raffle" element={<Details />} />
 
           </Routes>
 

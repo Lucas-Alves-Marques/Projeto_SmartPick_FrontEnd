@@ -1,0 +1,10 @@
+.container_raffle{
+    padding: 1vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
