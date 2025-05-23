@@ -26,7 +26,7 @@ const Card = ({ raffle}) => {
             <div className={Style.icons}>
 
                 <Dices />
-                <Pencil />
+                <Pencil onClick={()=>{navigateTo('/uptade')}} />
                 <Trash />
                 <Info onClick={()=>{navigateTo('/info_card')}}/>
 

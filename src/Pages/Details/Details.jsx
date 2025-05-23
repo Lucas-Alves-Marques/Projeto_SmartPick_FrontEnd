@@ -74,16 +74,6 @@ const Details = () => {
                 <h1>Categorias</h1>
                 <div className={Style.categories}>
 
-                    {/* {categories?.map((categories, index) => (
-
-                        <div key={index}>
-
-                            <CardDetails cat={categories} items={items} position={index} />
-
-                        </div>
-
-                    ))} */}
-
                     {Object.entries(categories ?? {}).map(([value, key], index) => (
 
                         <div key={index}>
@@ -98,7 +88,7 @@ const Details = () => {
 
                     <Return onClick={() => { navigateTo('/listagem', '') }} />
                     <Dices />
-                    <Pencil />
+                    <Pencil onClick={() => { navigateTo('/uptade', id_raffle ) }} />
                     <Trash />
 
                 </div>

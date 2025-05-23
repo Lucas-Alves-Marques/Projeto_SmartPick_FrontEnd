@@ -14,6 +14,7 @@ function Register() {
 
   })
 
+
   const [newRaffleTitle, setNewRaffleTitle] = useState('')
 
   const [newCategories, setNewCategories] = useState([''])
@@ -198,7 +199,12 @@ function Register() {
 
         {newCategories.map((cat, index) => {
 
-          return <Form key={index} handleTitleC={(e) => uptadeNameCategory(index, e.target.value)} category={index} functioAddItem={handleItem} functioRevItem={removeItem} />
+          return (<Form key={index} 
+                        handleTitleC={(e) => uptadeNameCategory(index, e.target.value)} 
+                        category={index} 
+                        functioAddItem={handleItem} 
+                        functioRevItem={removeItem}
+                        />)
 
         })
 

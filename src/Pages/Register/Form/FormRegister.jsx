@@ -1,11 +1,48 @@
 import { useState, useRef, useEffect } from 'react';
 import style from './FormRegister.module.css'
 
-function Form({ handleTitleC, category, functioAddItem, functioRevItem }) {
+function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat }) {
 
     const [items, setItems] = useState([])
 
     const lastItem = useRef(null);
+
+    // useEffect(()=>{
+
+    //     console.log(category[1])
+
+    // },[category])
+
+
+    function uptadeItems() {
+
+        const matchedItems = Object.entries(itemsCat ?? {})
+            .filter(([_, item]) => item.id_category === category[1])
+            .map(([_, item]) => item.name);
+
+        setItems(matchedItems)
+
+    }
+
+    useEffect(() => {
+
+        uptadeItems()
+
+    }, [itemsCat])
+
+
+    useEffect(() => {
+
+        console.log(items)
+
+    }, [items])
+
+    // useEffect(() => {
+
+    //     console.log(items)
+
+    // }, [])
+
 
     const addItem = (e) => {
 
@@ -27,9 +64,15 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem }) {
 
     useEffect(() => {
 
+        // if (!itemsCat) {
+
         lastItem.current?.scrollIntoView({ behavior: 'smooth' })
 
         setLastItemList(items.length + 1)
+
+        // }
+
+
 
     }, [items])
 
@@ -38,25 +81,60 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem }) {
 
         <form className={style.form}>
 
-            <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC}></input>
+            {category.length > 1 ?
+
+                <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC} value={category[0]} ></input>
+
+                :
+
+                <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC}></input>
+
+            }
+
             <ul>
 
-                <li>
+                {category.length > 1 ? (
 
-                    <input id={`Cat${category + 1}_item1`} placeholder='item 1' onChange={functioAddItem}></input>
+                    <>
 
-                </li>
+                        {
+                            items.map((value, index) => {
 
-                {items.map((_, index) => {
+                                return (
 
-                    return (
+                                    <li key={index}>
+                                        <input id={`Cat${category + 1}_item${index + 2}`} placeholder={`item ${index + 2}`} onChange={functioAddItem} value={value} required></input>
+                                    </li>
 
-                        <li key={index}>
-                            <input id={`Cat${category + 1}_item${index + 2}`} placeholder={`item ${index + 2}`} onChange={functioAddItem} required></input>
+                                )
+                            })
+                        }
+
+                    </>
+
+                ) : (
+
+                    <>
+
+                        <li>
+
+                            <input id={`Cat${category + 1}_item1`} placeholder='item 1' onChange={functioAddItem}></input>
+
                         </li>
 
-                    )
-                })}
+                        {items.map((_, index) => {
+
+                            return (
+
+                                <li key={index}>
+                                    <input id={`Cat${category + 1}_item${index + 2}`} placeholder={`item ${index + 2}`} onChange={functioAddItem} required></input>
+                                </li>
+
+                            )
+                        })}
+
+                    </>
+                )}
 
                 <div ref={lastItem} />
 
@@ -68,7 +146,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem }) {
 
                 {items.length > 0 &&
 
-                    <button className={style.btn} onClick={(e) => {functioRevItem(category, lastItemList); removeItemList(e) }}>-</button>
+                    <button className={style.btn} onClick={(e) => { functioRevItem(category, lastItemList); removeItemList(e) }}>-</button>
                 }
 
             </div>

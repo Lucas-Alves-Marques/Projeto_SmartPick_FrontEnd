@@ -23,7 +23,7 @@ function NavBar() {
         </Link>
 
         <Link to='/listagem'>
-          <li className={location.includes('/listagem') || location.includes('/info_card')  ? Style.item_marcado : Style.item}>
+          <li className={location.includes('/listagem') || location.includes('/info_card') || location.includes('/uptade')   ? Style.item_marcado : Style.item}>
             Sorteios
           </li>
         </Link>

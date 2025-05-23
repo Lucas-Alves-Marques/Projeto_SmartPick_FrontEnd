@@ -7,6 +7,7 @@ import Register from "./Pages/Register/Register";
 import Listagem from "./Pages/Listagem/Listagem";
 import Details from './Pages/Details/Details'
 import Footer from "./Layout/Footer/Footer";
+import UptadeRaffle from "./Pages/Uptade/UptadeRaffle";
 
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
             <Route path="/listagem" element={<Listagem />} />
 
             <Route path="/info_card/:id_raffle" element={<Details />} />
+
+            <Route path="/uptade/:id_raffle" element={<UptadeRaffle />} />
+
+            {/* <Route path="/uptade" element={<UptadeRaffle />} /> */}
 
           </Routes>
 

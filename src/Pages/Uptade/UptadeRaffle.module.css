@@ -1,0 +1,112 @@
+.body{
+    color: white;
+    padding: 5vh 2vh;
+    background-color: #00437079;
+    backdrop-filter: blur(3px);
+    border-radius: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 0.4vh solid white;
+
+}
+
+.titulo{
+    background-color: #004370;
+    color: white;
+    text-align: center;
+    border: none;
+    font-size: 5vh;
+    margin-bottom: 2vh;
+    border-radius: 3vh;
+    font-weight: bold;
+    border: 0.4vh solid white;
+
+}
+
+.titulo::placeholder{
+    color: white;
+    font-size: 5vh;
+    font-weight: bold;
+
+}
+
+.forms{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2vh;
+}
+
+.bnts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+.bntDefault{
+    height: 6vh;
+    width: 15vh;
+    text-align: center;
+    background-color: #0080cfb0;
+    border-radius: 1vh;
+    border: 0.4vh solid white;
+    color: white;
+    margin-right: 2vh;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btnSave{
+    height: 6vh;
+    width: 15vh;
+    text-align: center;
+    background-color: #0080cfb0;
+    border-radius: 1vh;
+    border: 0.4vh solid white;
+    color: white;
+    margin-right: 2vh;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btnSave:hover{
+    background-color: rgb(20, 165, 20);
+}
+
+.message{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3vh;
+    margin-left: -2vh;
+    background-color: #004370b9;
+    backdrop-filter: blur(3px);
+    color: white;
+    border: 0.4vh solid white;
+    border-radius: 3vh;
+
+}
+
+.message button{
+    height: 6vh;
+    width: 15vh;
+    text-align: center;
+    background-color: #0080cfb0;
+    border-radius: 1vh;
+    border: 0.4vh solid white;
+    color: white;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-top: 2vh;
+}
+
+.message button:hover{
+    background-color: rgb(20, 165, 20);
+}
