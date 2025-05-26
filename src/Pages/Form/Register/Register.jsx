@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './Register.module.css';
 import axios from 'axios';
-import Form from './Form/FormRegister';
+import Form from '../FormRegister';
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -204,6 +204,7 @@ function Register() {
                         category={index} 
                         functioAddItem={handleItem} 
                         functioRevItem={removeItem}
+                        itemsCat={''}
                         />)
 
         })
@@ -275,6 +276,7 @@ function Register() {
     </div>
   );
 }
+
 
 export default Register;
 

@@ -3,16 +3,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Layout/NavBar/NavBar";
 import Container from "./Layout/Container/Container";
 import Home from "./Pages/Home/Home";
-import Register from "./Pages/Register/Register";
+import Register from "./Pages/Form/Register/Register";
 import Listagem from "./Pages/Listagem/Listagem";
 import Details from './Pages/Details/Details'
 import Footer from "./Layout/Footer/Footer";
-import UptadeRaffle from "./Pages/Uptade/UptadeRaffle";
+import Uptade from "./Pages/Form/Uptade/UptadeRaffle";
 
 
 function App() {
+  
   return (
+
     <div className={style.body}>
+
       <BrowserRouter>
 
         <NavBar />
@@ -29,9 +32,8 @@ function App() {
 
             <Route path="/info_card/:id_raffle" element={<Details />} />
 
-            <Route path="/uptade/:id_raffle" element={<UptadeRaffle />} />
+            <Route path="/uptade/:id_raffle" element={<Uptade />} />
 
-            {/* <Route path="/uptade" element={<UptadeRaffle />} /> */}
 
           </Routes>
 

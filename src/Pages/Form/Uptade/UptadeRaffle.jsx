@@ -1,6 +1,6 @@
 import Style from './UptadeRaffle.module.css'
 import { useNavigate } from "react-router-dom";
-import Form from '../Register/Form/FormRegister';
+import Form from '../FormRegister';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -13,12 +13,10 @@ function UptadeRaffle() {
     const [raffle, setRaffle] = useState({
 
         raffleTitle: '',
-        categories: [],
+        categories: {},
         items: {}
 
     })
-
-    const [raffleSeleted, setRaffleSeleted] = useState({});
 
     const [newRaffleTitle, setNewRaffleTitle] = useState('')
 
@@ -33,8 +31,6 @@ function UptadeRaffle() {
     const navigate = useNavigate()
 
     const handleItem = (e) => {
-
-        e.preventDefault()
 
         setNewItems({ ...newItems, [e.target.id]: e.target.value })
 
@@ -64,7 +60,7 @@ function UptadeRaffle() {
 
         setNewRaffleTitle(e.target.value)
 
-        // console.log(newRaffleTitle)
+        console.log(newRaffleTitle)
 
     }
 
@@ -87,21 +83,23 @@ function UptadeRaffle() {
 
     const uptadeNameCategory = (index, value) => {
 
-        const updated = [...newCategories];
+        setNewCategories(prev => ({
 
-        const [_, cod_title] = updated[index];
+            ...prev,
 
-        updated[index] = [value, cod_title];
+            [index] : value
 
-        setNewCategories(updated);
+        }))
 
-        // console.log(newCategories)
+        console.log(newCategories)
 
     }
 
     const saveRaffle = async (e) => {
 
         e.preventDefault()
+
+        //Fazer um Map em Categoria
 
         const validCategoty = newCategories.some(category => category === '');
 
@@ -156,6 +154,11 @@ function UptadeRaffle() {
 
             }))
 
+            console.log(raffle)
+
+            setMessage('Sorteio Salvo')
+            setBtnMessage('OK')
+
         }
 
     }
@@ -164,99 +167,43 @@ function UptadeRaffle() {
 
     useEffect(() => {
 
-        try {
-
-            const getRaffle = async () => {
-
-                const raffle = await axios.get(`http://localhost:3000/api/raffle/listRaffle/${id_raffle}`)
-
-                setRaffleSeleted(raffle.data.message)
-
-            }
-
-            getRaffle()
-        }
-
-        catch (err) {
-
-            console.log(err)
-        }
-
-    }, [id_raffle])
-
-    const { title, categories, items } = raffleSeleted;
-
-    //Teste de Separação
-
-    // useEffect(() => {
-
-    //     console.log(title)
-    //     console.log(categories)
-    //     console.log(items)
-
-
-    // }, [title])
-
-    //Atulização de estado do sorteio
-
-    useEffect(() => {
-
-        setNewRaffleTitle(title);
-
-        const cat = Object.entries(categories ?? {})
-
-        setNewCategories(cat);
-
-        setNewItems(items)
-
-
-    }, [categories, title, items]);
-
-    // useEffect(() => {
-
-    //     console.log(newRaffleTitle, newCategories, newItems);
-
-    //     console.log(newItems);
-
-    // }, [newRaffleTitle, newCategories]);
-
-    //Atualiza os dados no Banco
-
-    useEffect(() => {
-
-        const sendToDataBase = async () => {
+        const GetRaffle = async () => {
 
             try {
 
-                await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
+                const raffle = await axios.get(`http://localhost:3000/api/raffle/listRaffle/${id_raffle}`)
 
-                console.log(raffle)
+                const { title, categories, items } = raffle.data.message;
 
-                setMessage('Sorteio Cadastrado')
+                setNewRaffleTitle(title);
 
-                setBtnMessage('OK')
+                setNewCategories(categories);
 
-            } catch (err) {
+                setNewItems(items)
 
-                console.log(`Erro: ${err}`)
 
-                setMessage('Erro ao Cadastrar Sorteio')
+            }
 
-                setBtnMessage('Tentar Novamente')
+            catch (err) {
 
+                console.log(err)
             }
 
         }
 
-        if (raffle.raffleTitle && raffle.categories.length && raffle.items) {
+        GetRaffle()
 
-            sendToDataBase();
+    }, [id_raffle])
 
-        }
+    //Teste para ver se o estado esta atualizando
 
+    // useEffect(() => {
 
-    }, [raffle])
+    //     console.log(newRaffleTitle)
+    //     console.log(newCategories)
+    //     console.log(newItems)
 
+    // }, [newRaffleTitle, newCategories, newItems])
 
     return (
 
@@ -268,10 +215,13 @@ function UptadeRaffle() {
 
                 {Object.entries(newCategories ?? {}).map(([index, cat]) => (
 
+                    // console.log(index) id_cat
+                    // console.log(cat)   name_cat
+
                     <Form
                         key={index}
                         handleTitleC={(e) => uptadeNameCategory(index, e.target.value)}
-                        category={cat}
+                        category={{[index] : cat}}
                         functioAddItem={handleItem}
                         functioRevItem={removeItem}
                         itemsCat={newItems}
@@ -283,7 +233,7 @@ function UptadeRaffle() {
 
             <div className={Style.bnts}>
 
-                {newCategories.length < 2 &&
+                {Object.entries(newCategories ?? {}).length < 2 &&
 
                     <>
 
@@ -295,7 +245,7 @@ function UptadeRaffle() {
 
                 }
 
-                {newCategories.length >= 2 &&
+                {Object.entries(newCategories ?? {}).length >= 2 &&
 
                     <>
 
@@ -318,11 +268,11 @@ function UptadeRaffle() {
                     <button
                         onClick={(e) => {
 
-                            if (message === 'Sorteio Cadastrado') {
+                            if (message === 'Sorteio Salvo') {
 
                                 console.log(message)
 
-                                navigate('/listagem');
+                                // navigate('/listagem');
 
                             } else {
 

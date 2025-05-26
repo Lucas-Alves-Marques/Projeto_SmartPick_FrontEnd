@@ -43,14 +43,14 @@ const Details = () => {
 
     //teste de separação dos arrays
 
-    // useEffect(()=>{
+    useEffect(()=>{
 
-    //     console.log(title)
-    //     console.log(categories)
-    //     console.log(items)
+        console.log(title)
+        console.log(categories)
+        console.log(items)
 
 
-    // }, [title])
+    }, [title])
 
     const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const Details = () => {
                 <h1>Categorias</h1>
                 <div className={Style.categories}>
 
-                    {Object.entries(categories ?? {}).map(([value, key], index) => (
+                    {Object.entries(categories ?? {}).map(([key, value], index) => (
 
                         <div key={index}>
 
