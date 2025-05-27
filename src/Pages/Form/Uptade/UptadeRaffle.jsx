@@ -32,27 +32,41 @@ function UptadeRaffle() {
 
     const handleItem = (e) => {
 
-        setNewItems({ ...newItems, [e.target.id]: e.target.value })
+        const updatedItems = newItems.map(item => {
 
-        // console.log(newItems)
+            if (item.id_item === e.target.id) {
+
+                return { ...item, name: e.target.value };
+
+            }
+
+            return item;
+
+        });
+
+        console.log(newItems)
+
+        setNewItems(updatedItems);
 
     }
 
-    const removeItem = (cate, nitem) => {
+    const removeItem = (e) => {
 
-        if (cate === 0) {
+        const updatedItems = newItems.map(item => {
 
-            delete newItems[`Cat1_item${nitem}`];
+            if (item.id_item === e.target.id) {
 
-        }
+                return { ...item, name: '' };
 
-        else {
+            }
 
-            delete newItems[`Cat2_item${nitem}`];
+            return item;
 
-        }
+        });
 
-        // console.log(newItems)
+        setNewItems(updatedItems);
+
+        console.log(newItems);
 
     };
 
@@ -87,7 +101,7 @@ function UptadeRaffle() {
 
             ...prev,
 
-            [index] : value
+            [index]: value
 
         }))
 
@@ -101,7 +115,7 @@ function UptadeRaffle() {
 
         //Fazer um Map em Categoria
 
-        const validCategoty = newCategories.some(category => category === '');
+        const validCategoty = Object.values(newCategories).every(category => category !== '');
 
         const validItems = Object.values(newItems).every(item => item !== "");
 
@@ -113,7 +127,7 @@ function UptadeRaffle() {
 
         }
 
-        else if (validCategoty) {
+        else if (!validCategoty) {
 
             setMessage('Defina o nome das categorias')
 
@@ -215,13 +229,10 @@ function UptadeRaffle() {
 
                 {Object.entries(newCategories ?? {}).map(([index, cat]) => (
 
-                    // console.log(index) id_cat
-                    // console.log(cat)   name_cat
-
                     <Form
                         key={index}
                         handleTitleC={(e) => uptadeNameCategory(index, e.target.value)}
-                        category={{[index] : cat}}
+                        category={{ [index]: cat }}
                         functioAddItem={handleItem}
                         functioRevItem={removeItem}
                         itemsCat={newItems}

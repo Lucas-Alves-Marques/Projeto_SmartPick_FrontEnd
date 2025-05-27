@@ -7,39 +7,29 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
     const lastItem = useRef(null);
 
+    const [count, setCount] = useState(1);
+
+    const [removeItemID, setRemoveItemID] = useState();
+
     const [seletedCat, setSeletedCat] = useState([])
-
-    const handleItem = (value, index) => {
-
-        setItems(prevItems => {
-
-            const updated = [...prevItems];
-
-            updated[index] = value;
-
-            return updated;
-        });
-
-        // console.log(newItems)
-    }
-
-    // useEffect(() => {
-
-    //     const matchedItems = Object.entries(itemsCat ?? {})
-    //         .filter(([_, item]) => item.id_category === category[1])
-
-    //     setItems(matchedItems)
-
-    //     console.log(items)
-
-    // }, [])
 
     useEffect(() => {
 
-        // console.log(itemsCat)
-        setItems(itemsCat)
+        if (itemsCat) {
+
+            const ItemsCat = itemsCat.filter(item => item.id_category == seletedCat[0])
+
+            setItems(ItemsCat) 
+
+        }
 
     }, [itemsCat])
+
+    // useEffect(()=>{
+
+    //     console.log(items)
+
+    // },[items])
 
     //Vendo o que vem no category
 
@@ -55,9 +45,39 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
     const addItem = (e) => {
 
-        e.preventDefault()
+        if (itemsCat) {
 
-        setItems([...items, '']);
+            e.preventDefault()
+
+            // const newArray = {
+                
+            //     id_item : '', 
+            //     id_category: parseInt(seletedCat[0]),
+            //     name: `item ${items.length + 1}`
+
+            // }
+
+            // items.push(newArray)
+
+            items.push('teste')
+
+            console.log(items)
+            
+        }
+
+        else {
+
+            e.preventDefault()
+
+            const uptadeItems = { ...items, [count]: { count: `Posição ${count}` } }
+
+            setCount(count + 1)
+
+            setItems(uptadeItems);
+
+            console.log(uptadeItems)
+
+        }
 
     };
 
@@ -65,8 +85,70 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         e.preventDefault()
 
-        setItems(items.slice(0, -1));
+        if (itemsCat == '') {
 
+            functioRevItem(category, lastItemList)
+
+            const keys = Object.keys(items);
+
+            const ultimaChave = keys[keys.length - 1];
+
+            const novoObj = { ...items };
+
+            delete novoObj[ultimaChave];
+
+            setItems(novoObj)
+
+            console.log(items)
+        }
+
+        else {
+
+            const ItemsCopy = [...items];
+
+            for (let i = ItemsCopy.length - 1; i >= 0; i--) {
+
+                if (ItemsCopy[i].name !== "") {
+
+                    ItemsCopy[i].name = "";
+
+                    setRemoveItemID(ItemsCopy[i].id_item);
+
+                    setItems(ItemsCopy);
+
+                    break;
+                }
+            }
+
+            functioRevItem({
+
+                target: {
+
+                    id: removeItemID,
+                }
+            });
+
+        }
+
+
+    };
+
+    const handleInputChange = (index, newValue) => {
+
+        const updatedItems = [...items];
+
+        updatedItems[index].name = newValue;
+
+        setItems(updatedItems);
+
+        functioAddItem({
+
+            target: {
+
+                id: updatedItems[index].id_item,
+                value: newValue
+            }
+        });
     };
 
     const [lastItemList, setLastItemList] = useState('')
@@ -92,7 +174,9 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                 <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC} value={seletedCat[1]} ></input>
 
-                : <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC}></input>
+                :
+
+                <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC}></input>
 
             }
 
@@ -104,7 +188,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                         {Object.entries(items ?? {}).map((array) => {
 
-                            if (array[1].id_category == seletedCat[0]) {
+                            if (array[1].name != '') {
 
                                 return (
 
@@ -112,23 +196,21 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                                         <input
                                             id={array[1].id_item}
-                                            placeholder={`item ${array[0] + 2}`}
-                                            onChange={(e) => { handleItem(e.target.value, array[0]); functioAddItem(e) }}
-                                            value={array[1].name}
+                                            placeholder={`item ${items.length + 1}`}
+                                            onChange={(e) => { handleInputChange(array[0], e.target.value) }}
+                                            value={items[array[0]].name}
                                             required>
 
                                         </input>
 
                                     </li>
 
-                                    // console.log(array)
-
-
                                 )
 
                             }
 
                         })}
+
 
                     </>
 
@@ -164,9 +246,9 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                 <button className={style.btn} onClick={addItem}>+</button>
 
-                {items.length > 0 &&
+                {Object.keys(items).length != 0 &&
 
-                    <button className={style.btn} onClick={(e) => { functioRevItem(category, lastItemList); removeItemList(e) }}>-</button>
+                    <button className={style.btn} onClick={(e) => { removeItemList(e) }}>-</button>
                 }
 
             </div>

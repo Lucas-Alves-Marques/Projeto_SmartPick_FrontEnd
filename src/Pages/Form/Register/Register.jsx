@@ -33,7 +33,7 @@ function Register() {
 
     setNewItems({ ...newItems, [e.target.id]: e.target.value })
 
-    // console.log(newItems)
+    console.log(newItems)
 
   }
 
