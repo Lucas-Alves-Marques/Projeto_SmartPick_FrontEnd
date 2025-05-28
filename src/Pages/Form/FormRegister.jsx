@@ -19,7 +19,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             const ItemsCat = itemsCat.filter(item => item.id_category == seletedCat[0])
 
-            setItems(ItemsCat) 
+            setItems(ItemsCat)
 
         }
 
@@ -49,20 +49,57 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             e.preventDefault()
 
-            // const newArray = {
-                
-            //     id_item : '', 
-            //     id_category: parseInt(seletedCat[0]),
-            //     name: `item ${items.length + 1}`
+            const notName = items.filter((item) => {
 
-            // }
+                const validItem = Object.entries(item).every((item) => item[1] != " ")
 
-            // items.push(newArray)
+                if (validItem == false) {
 
-            items.push('teste')
+                    return item
+                }
 
-            console.log(items)
-            
+            })
+
+            // console.log(notName)
+
+            if (notName.length < 1) {
+
+                setItems(prevItems => [
+
+                    ...prevItems,
+
+                    {
+                        id_item: `NewItem${count}`,
+                        id_category: parseInt(seletedCat[0]),
+                        name: `item ${prevItems.length + 1}`,
+                    }
+
+                ]);
+
+                setCount(count + 1)
+
+            }
+
+            else {
+
+                items.map((item, index) => {
+
+                    if (item.id_item == notName[0].id_item) {
+
+                        const newItems = [...items];
+
+                        newItems[index].name = `Item ${index + 1}`
+
+                        setItems(newItems)
+
+                    }
+
+                })
+
+            }
+
+            lastItem.current?.scrollIntoView({ behavior: 'smooth' })
+
         }
 
         else {
@@ -74,8 +111,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
             setCount(count + 1)
 
             setItems(uptadeItems);
-
-            console.log(uptadeItems)
 
         }
 
@@ -99,7 +134,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             setItems(novoObj)
 
-            console.log(items)
         }
 
         else {
@@ -108,9 +142,9 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             for (let i = ItemsCopy.length - 1; i >= 0; i--) {
 
-                if (ItemsCopy[i].name !== "") {
+                if (ItemsCopy[i].name !== " ") {
 
-                    ItemsCopy[i].name = "";
+                    ItemsCopy[i].name = " ";
 
                     setRemoveItemID(ItemsCopy[i].id_item);
 
@@ -119,6 +153,8 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
                     break;
                 }
             }
+
+            console.log(removeItemID)
 
             functioRevItem({
 
@@ -130,6 +166,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         }
 
+        setCount(count - 1)
 
     };
 
@@ -146,7 +183,9 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
             target: {
 
                 id: updatedItems[index].id_item,
+                cat: seletedCat[0],
                 value: newValue
+
             }
         });
     };
@@ -188,7 +227,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                         {Object.entries(items ?? {}).map((array) => {
 
-                            if (array[1].name != '') {
+                            if (array[1].name !== ' ') {
 
                                 return (
 
@@ -196,7 +235,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                                         <input
                                             id={array[1].id_item}
-                                            placeholder={`item ${items.length + 1}`}
+                                            placeholder={`item ${items.length}`}
                                             onChange={(e) => { handleInputChange(array[0], e.target.value) }}
                                             value={items[array[0]].name}
                                             required>
@@ -210,7 +249,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
                             }
 
                         })}
-
 
                     </>
 
@@ -248,7 +286,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                 {Object.keys(items).length != 0 &&
 
-                    <button className={style.btn} onClick={(e) => { removeItemList(e) }}>-</button>
+                    <button className={style.btn} onClick={removeItemList}>-</button>
                 }
 
             </div>

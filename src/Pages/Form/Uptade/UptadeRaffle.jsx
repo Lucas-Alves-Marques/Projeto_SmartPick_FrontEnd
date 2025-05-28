@@ -32,22 +32,44 @@ function UptadeRaffle() {
 
     const handleItem = (e) => {
 
-        const updatedItems = newItems.map(item => {
+        const found = newItems.some(item => item.id_item === e.target.id);
 
-            if (item.id_item === e.target.id) {
+        if (found) {
 
-                return { ...item, name: e.target.value };
+            return newItems.map(item => {
+
+                if( item.id_item === e.target.id && e.target.cat === item.id_category ){
+
+                    return {...item, name: e.target.value}
+                }
+
+                else{
+
+                    return item
+                }
 
             }
 
-            return item;
 
-        });
+            );
+        }
 
-        console.log(newItems)
+        else {
 
-        setNewItems(updatedItems);
+            const UptadeItems = [...newItems,
 
+                {
+                    id_item: e.target.id,
+                    id_category: parseInt(e.target.cat),
+                    name: e.target.value,
+                    
+                }
+            ]
+
+            setNewItems(UptadeItems)
+
+            console.log(newItems)
+        }
     }
 
     const removeItem = (e) => {
@@ -64,9 +86,9 @@ function UptadeRaffle() {
 
         });
 
-        setNewItems(updatedItems);
+        // setNewItems(updatedItems);
 
-        console.log(newItems);
+        console.log(updatedItems);
 
     };
 
