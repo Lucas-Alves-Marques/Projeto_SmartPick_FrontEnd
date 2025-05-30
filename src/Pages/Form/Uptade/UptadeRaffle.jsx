@@ -22,13 +22,11 @@ function UptadeRaffle() {
 
     const [newCategories, setNewCategories] = useState({})
 
-    const [newItems, setNewItems] = useState({})
+    const [newItems, setNewItems] = useState([])
 
     const [message, setMessage] = useState('')
 
     const [btnMessage, setBtnMessage] = useState('')
-
-    const [key, setKey] = useState(null)
 
     const navigate = useNavigate()
 
@@ -48,7 +46,7 @@ function UptadeRaffle() {
 
         }))
 
-        console.log(newCategories)
+        // console.log(newCategories)
 
     }//OK
 
@@ -60,33 +58,61 @@ function UptadeRaffle() {
 
         if (deleteCat) {
 
-            setKey(deleteCat[0])
+            if (deleteCat[1].trim() !== '') {
 
-        }
+                setNewCategories(prev => ({
 
-        if (deleteCat && deleteCat[1] !== ' ') {
+                    ...prev,
 
-            const UpdateItems = newItems.map((item) => {
+                    [deleteCat[0]]: ''
 
-                if (item.id_category == key) {
+                }))
 
-                    item.name = ' '
+                const UpdateItems = newItems.map((item) => {
+
+                    if (item.id_category == deleteCat[0]) {
+
+                        item.name = ' '
+
+                    }
+
+                    return item
+
+                })
+
+                setNewItems(UpdateItems)
+
+            }
+
+            else {
+
+                setNewCategories(prev => ({
+
+                    ...prev,
+
+                    [deleteCat[0]]: 'Categoria 2'
+
+                }))
+
+                for (let item of newItems) {
+
+                    if (item.id_category == deleteCat[0]) {
+
+                        item.name = 'Item 1'
+
+                        break;
+
+                    }
 
                 }
+            }
 
-                return item
+            {// CONSOLES TESTE
 
-            })
+                // console.log(deleteCat) ok
 
-            setNewCategories(prev => ({
-
-                ...prev,
-
-                [key]: ' '
-
-            }))
-
-            setNewItems(UpdateItems)
+                // console.log(key) oK
+            }
 
         }
 
@@ -96,30 +122,34 @@ function UptadeRaffle() {
 
                 ...prev,
 
-                [key]: 'Categoria 2'
+                ["NewCategory"]: 'Categoria 2'
 
             }))
 
-            for (let item of newItems) {
+            setNewItems(prevItems => [
 
-                if (item.id_category == key) {
+                ...prevItems,
 
-                    item.name = 'Item 1'
-
-                    break;
-
+                {
+                    id_item: 'NewItem1',
+                    id_category: 'NewCategory',
+                    name: 'Item1'
                 }
 
-            }
 
-            console.log(newItems)
+            ])
+
 
         }
 
-        console.log(key)
-
 
     }//OK
+
+    useEffect(() => {
+
+        console.log(newItems)
+
+    }, [newItems])
 
     const handleItem = (e) => {
 
@@ -150,11 +180,13 @@ function UptadeRaffle() {
 
         else {
 
+            const idCat = Number.isNaN(parseInt(e.target.cat)) ? "NewCategory" : parseInt(e.target.cat);
+
             const UptadeItems = [...newItems,
 
             {
                 id_item: e.target.id,
-                id_category: parseInt(e.target.cat),
+                id_category: idCat,
                 name: e.target.value,
 
             }
@@ -164,7 +196,7 @@ function UptadeRaffle() {
 
         }
 
-        console.log(newItems)
+        // console.log(newItems)
 
     } //OK
 
@@ -192,30 +224,60 @@ function UptadeRaffle() {
 
     // }, [newItems]) 
 
+{/*
+            PRECISA VALIDAR SE O NOME DA CATEGORIA ESTÁ PREENCHIDO CASO OS 
+                 ITENS TENHA O ID DE CATEGORIA COM "NewCategory"
+
+*/}
+
+
     const saveRaffle = async (e) => {
 
         e.preventDefault()
 
-        const validCategoty = Object.values(newCategories).every(([_, cat]) => cat !== ' ' || cat !== '');
+        const solidItems = newItems.filter(item =>
 
-        const solidItems = newItems.filter((item) => {
+            typeof item.id_item === "string" &&
 
-            if (typeof item.id_item == "string") {
+            item.name.trim() !== '' ||
 
-                if (item.name !== ' ') {
+            typeof item.id_item === "number"
 
-                    return item
+        )
+
+        const validNewCat = solidItems.some(item => item.id_category === "NewCategory")
+
+        const solidCat = Object.entries(newCategories).filter(item =>
+
+            item[0] == "NewCategory" && item[1].trim() !== '' ||
+            item[0] !== "NewCategory"
+
+            // if (item[0] !== "NewCategory" && item[1].trim() !== "" || item[0] !== "null" && item[1].trim() !== "") {
+
+            //     return item
+            // }
+        )
+
+        if (validNewCat) {
+
+            solidCat.map((cat) => {
+
+                if (cat[1] !== "NewCategory") {
+
+                    console.log(solidCat)
+
+                    setMessage('Defina o nome da categoria')
+
+                    setBtnMessage('OK')
+
                 }
-            }
 
-            else {
+            })
 
-                return item
-            }
 
-        })
+        }
 
-        if (newRaffleTitle === '') {
+        else if (newRaffleTitle === '') {
 
             setMessage('Coloque um titulo para o seu Sorteio')
 
@@ -223,20 +285,35 @@ function UptadeRaffle() {
 
         }
 
-        else if (!validCategoty) {
+        else if (solidCat[0][1] == "" || solidCat[0][1] == " ") {
 
-            setMessage('Defina o nome das categorias')
+            setMessage('Defina o nome da categoria')
 
             setBtnMessage('OK')
-
 
         }
 
-        else if (newCategories.length === 1 && Object.keys(newItems).length < 2) {
+        else if (parseInt(solidCat[0]) == NaN) {
 
-            setMessage('Coloque no minimo 2 itens')
+            if (solidCat[1] && solidCat[1][1] == "" || solidCat[1] && solidCat[1][1] == " ") {
+
+                setMessage('Defina o nome da categoria')
+
+                setBtnMessage('OK')
+
+                console.log("Parou no titulo categoria 2")
+
+            }
+
+        }
+
+        else if (solidCat.length == 1 && solidItems[1].name == ' ' || solidCat.length == 2 && solidItems[1].name == ' ') {
+
+            setMessage('Coloque no minimo 2 itens na primeira categoria')
 
             setBtnMessage('OK')
+
+            console.log("Parou no numero de items")
 
         }
 
@@ -247,7 +324,7 @@ function UptadeRaffle() {
                 ...prev,
 
                 raffleTitle: newRaffleTitle.toUpperCase(),
-                categories: newCategories,
+                categories: solidCat,
                 items: solidItems
 
             }))
@@ -255,6 +332,8 @@ function UptadeRaffle() {
             console.log(raffle)
 
         }
+
+        // console.log(raffle)
 
     }
 
@@ -276,7 +355,7 @@ function UptadeRaffle() {
 
                 setNewItems(items)
 
-                console.log(categories)
+                // console.log(categories)
 
 
             }
@@ -294,21 +373,17 @@ function UptadeRaffle() {
 
     // Envia os dados para o back
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (raffle.raffleTitle && raffle.categories && raffle.items) {
+    //     if (raffle.raffleTitle && raffle.categories && raffle.items) {
 
-            axios.put(`http://localhost:3000/api/raffle/uptadeRaffle/${id_raffle}`, raffle)
-            setMessage('Sorteio Salvo')
-            setBtnMessage('OK')
+    //         axios.put(`http://localhost:3000/api/raffle/uptadeRaffle/${id_raffle}`, raffle)
+    //         setMessage('Sorteio Salvo')
+    //         setBtnMessage('OK')
 
-        }
+    //     }
 
-
-
-
-
-    }, [raffle])
+    // }, [raffle])
 
     //Teste para ver se o estado esta atualizando
 
@@ -330,7 +405,7 @@ function UptadeRaffle() {
 
                 {Object.entries(newCategories ?? {}).map(([index, cat]) => {
 
-                    if (cat != ' ') {
+                    if (cat !== ' ') {
 
                         return (
 
@@ -354,7 +429,11 @@ function UptadeRaffle() {
 
             <div className={Style.bnts}>
 
-                {Object.entries(newCategories).every(([_, cat]) => cat !== ' ') && newCategories.length > 2 ?
+                {
+                    //[ ['1', 'Alunos'], ['2', 'Slides'] ]
+                }
+
+                {newCategories.length > 1 && Object.values(newCategories).every(value => value.trim() !== '') ?
 
                     <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); handleCategory() }}>Sorteio Simples</button>
 
@@ -381,8 +460,6 @@ function UptadeRaffle() {
                         onClick={(e) => {
 
                             if (message === 'Sorteio Salvo') {
-
-                                console.log(message)
 
                                 navigate('/listagem');
 
