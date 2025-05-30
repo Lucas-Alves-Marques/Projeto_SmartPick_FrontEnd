@@ -37,6 +37,8 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         setSeletedCat(Object.entries(category)[0])
 
+        console.log(seletedCat)
+
     }, [category])
 
     const addItem = (e) => {
@@ -59,13 +61,15 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             if (notName.length < 1) {
 
+                const idCat = seletedCat[0] !== "null" ? parseInt(seletedCat[0]) : "NewCategory";
+
                 setItems(prevItems => [
 
                     ...prevItems,
 
                     {
                         id_item: `NewItem${count}`,
-                        id_category: parseInt(seletedCat[0]),
+                        id_category: idCat,
                         name: `item ${prevItems.length + 1}`,
                     }
 
@@ -84,6 +88,11 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
                         const newItems = [...items];
 
                         newItems[index].name = `Item ${index + 1}`
+
+                        if (!category) {
+
+                            newItems[index].id_category = "NewCategory"
+                        }
 
                         setItems(newItems)
 

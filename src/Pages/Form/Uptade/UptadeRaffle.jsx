@@ -28,6 +28,8 @@ function UptadeRaffle() {
 
     const [btnMessage, setBtnMessage] = useState('')
 
+    const [key, setKey] = useState(null)
+
     const navigate = useNavigate()
 
     const handleTitle = (e) => {
@@ -55,9 +57,14 @@ function UptadeRaffle() {
         //[ ['1', 'Alunos'], ['2', 'Slides'] ]
 
         const deleteCat = Object.entries(newCategories)[1]
-        const key = deleteCat[0]
 
-        if (deleteCat[1] != ' ') {
+        if (deleteCat) {
+
+            setKey(deleteCat[0])
+
+        }
+
+        if (deleteCat && deleteCat[1] !== ' ') {
 
             const UpdateItems = newItems.map((item) => {
 
@@ -93,9 +100,9 @@ function UptadeRaffle() {
 
             }))
 
-            for (let item of newItems){
+            for (let item of newItems) {
 
-                if(item.id_category == key){
+                if (item.id_category == key) {
 
                     item.name = 'Item 1'
 
@@ -105,9 +112,11 @@ function UptadeRaffle() {
 
             }
 
-            // console.log(newItems)
+            console.log(newItems)
 
         }
+
+        console.log(key)
 
 
     }//OK
@@ -181,18 +190,30 @@ function UptadeRaffle() {
 
     //     console.log(newItems)
 
-    // }, [newItems])
-
+    // }, [newItems]) 
 
     const saveRaffle = async (e) => {
 
         e.preventDefault()
 
-        //Fazer um Map em Categoria
-
         const validCategoty = Object.values(newCategories).every(([_, cat]) => cat !== ' ' || cat !== '');
 
-        const validItems = Object.values(newItems).every(item => item !== "");
+        const solidItems = newItems.filter((item) => {
+
+            if (typeof item.id_item == "string") {
+
+                if (item.name !== ' ') {
+
+                    return item
+                }
+            }
+
+            else {
+
+                return item
+            }
+
+        })
 
         if (newRaffleTitle === '') {
 
@@ -219,15 +240,6 @@ function UptadeRaffle() {
 
         }
 
-        else if (validItems === false) {
-
-            setMessage('Preencha todos os items das categorias')
-
-            setBtnMessage('OK')
-
-
-        }
-
         else {
 
             setRaffle(prev => ({
@@ -236,14 +248,11 @@ function UptadeRaffle() {
 
                 raffleTitle: newRaffleTitle.toUpperCase(),
                 categories: newCategories,
-                items: newItems
+                items: solidItems
 
             }))
 
             console.log(raffle)
-
-            setMessage('Sorteio Salvo')
-            setBtnMessage('OK')
 
         }
 
@@ -282,6 +291,24 @@ function UptadeRaffle() {
         GetRaffle()
 
     }, [id_raffle])
+
+    // Envia os dados para o back
+
+    useEffect(() => {
+
+        if (raffle.raffleTitle && raffle.categories && raffle.items) {
+
+            axios.put(`http://localhost:3000/api/raffle/uptadeRaffle/${id_raffle}`, raffle)
+            setMessage('Sorteio Salvo')
+            setBtnMessage('OK')
+
+        }
+
+
+
+
+
+    }, [raffle])
 
     //Teste para ver se o estado esta atualizando
 
@@ -327,7 +354,7 @@ function UptadeRaffle() {
 
             <div className={Style.bnts}>
 
-                {Object.entries(newCategories).every(([_, cat]) => cat !== ' ') ?
+                {Object.entries(newCategories).every(([_, cat]) => cat !== ' ') && newCategories.length > 2 ?
 
                     <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); handleCategory() }}>Sorteio Simples</button>
 
@@ -357,7 +384,7 @@ function UptadeRaffle() {
 
                                 console.log(message)
 
-                                // navigate('/listagem');
+                                navigate('/listagem');
 
                             } else {
 
