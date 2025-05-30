@@ -23,7 +23,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         }
 
-    }, [itemsCat])
+    }, [itemsCat, seletedCat])
 
     // useEffect(()=>{
 
@@ -35,11 +35,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
     useEffect(() => {
 
-        // console.log(category)
-
         setSeletedCat(Object.entries(category)[0])
-
-        // console.log(seletedCat)
 
     }, [category])
 
@@ -60,7 +56,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             })
 
-            // console.log(notName)
 
             if (notName.length < 1) {
 
@@ -154,7 +149,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
                 }
             }
 
-            console.log(removeItemID)
 
             functioRevItem({
 
@@ -166,7 +160,11 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         }
 
-        setCount(count - 1)
+        if (count > 0) {
+
+            setCount(count - 1)
+
+        }
 
     };
 
@@ -188,6 +186,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             }
         });
+
     };
 
     const [lastItemList, setLastItemList] = useState('')

@@ -14,7 +14,6 @@ function Register() {
 
   })
 
-
   const [newRaffleTitle, setNewRaffleTitle] = useState('')
 
   const [newCategories, setNewCategories] = useState([''])
