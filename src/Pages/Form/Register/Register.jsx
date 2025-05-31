@@ -32,7 +32,7 @@ function Register() {
 
     setNewItems({ ...newItems, [e.target.id]: e.target.value })
 
-    console.log(newItems)
+    // console.log(newItems)
 
   }
 
@@ -161,7 +161,7 @@ function Register() {
 
         await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
 
-        console.log(raffle)
+        // console.log(raffle)
 
         setMessage('Sorteio Cadastrado')
 
