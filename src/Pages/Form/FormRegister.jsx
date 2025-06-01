@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import style from './FormRegister.module.css'
 
-function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat }) {
+function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat, type }) {
 
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(2);
 
     const [items, setItems] = useState([]);
 
@@ -42,8 +42,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
             setLastItemList(items.length + 1)
 
         }
-
-        console.log(items)
 
     }, [items])
 
@@ -113,57 +111,77 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             e.preventDefault()
 
-            for (const item in items) {
+            if (type == 'update') {
 
-                const countItem = 0;
+                for (const item in items) {
 
-                if (typeof item.id_item == 'number' && item.name === 'deleteItem') {
+                    const countItem = 0;
 
-                    item.name = `Item ${countItem + 1}`
+                    if (typeof item.id_item == 'number' && item.name === 'deleteItem') {
 
-                    break;
-
-                }
-
-                else {
-
-                    console.log("Ta no else")
-
-                    if (item.name === 'deleteItem') {
-
-                        item.name = `Item ${count}`
-
-                        break;
-                    }
-
-                    else if (countItem == items.length) {
-
-                        const addItem = {
-                            id_item: `NewItem${count}`,
-                            id_category: 'NewCategory',
-                            name: `item ${count}`,
-                        }
-
-                        setItems(prevItems => [
-
-                            ...prevItems,
-
-                            addItem
-                        ]
-
-                        )
+                        item.name = `Item ${countItem + 1}`
 
                         break;
 
                     }
 
                     else {
-                        countItem++;
-                    }
 
+                        if (item.name === 'deleteItem') {
+
+                            item.name = `Item ${count}`
+
+                            break;
+                        }
+
+                        else if (countItem == items.length) {
+
+                            const addItem = {
+                                id_item: `NewItem${count}`,
+                                id_category: 'NewCategory',
+                                name: `item ${count}`,
+                            }
+
+                            setItems(prevItems => [
+
+                                ...prevItems,
+
+                                addItem
+                            ]
+
+                            )
+
+                            break;
+
+                        }
+
+                        else {
+                            countItem++;
+                        }
+
+
+                    }
 
                 }
 
+            }
+
+            else {
+
+                const addItem = {
+                    id_item: `NewItem${count}`,
+                    id_category: 'NewCategory',
+                    name: `item ${count}`,
+                }
+
+                setItems(prevItems => [
+
+                    ...prevItems,
+
+                    addItem
+                ]
+
+                )
             }
 
         }
@@ -231,6 +249,8 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         setItems(updatedItems);
 
+        console.log(items)
+
         functioAddItem({
 
             target: {
@@ -249,7 +269,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         <form className={style.form}>
 
-            {typeof category != 'number' ?
+            {type == 'update' ?
 
                 <input className={style.inputSubt} placeholder="Categoria" required onChange={handleTitleC} value={seletedCat[1]} ></input>
 
@@ -261,7 +281,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
             <ul>
 
-                {typeof category != 'number' ? (
+                {type == 'update' ? (
 
                     <>
 

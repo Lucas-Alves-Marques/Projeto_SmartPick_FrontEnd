@@ -32,9 +32,9 @@ function UptadeRaffle() {
 
     useEffect(() => {
 
-        console.log(raffle)
+        console.log(newCategories)
 
-    }, [raffle])
+    }, [newCategories])
 
     //Recupera os dados do Banco
 
@@ -54,8 +54,6 @@ function UptadeRaffle() {
 
                 setNewItems(items)
 
-                // console.log(categories)
-
 
             }
 
@@ -72,33 +70,17 @@ function UptadeRaffle() {
 
     // Envia os dados para o back
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     if (raffle.raffleTitle && raffle.categories && raffle.items) {
+        if (raffle.raffleTitle && raffle.categories && raffle.items) {
 
-    //         axios.put(`http://localhost:3000/api/raffle/uptadeRaffle/${id_raffle}`, raffle)
-    //         setMessage('Sorteio Salvo')
-    //         setBtnMessage('OK')
+            axios.put(`http://localhost:3000/api/raffle/uptadeRaffle/${id_raffle}`, raffle)
+            setMessage('Sorteio Salvo')
+            setBtnMessage('OK')
 
-    //     }
+        }
 
-    // }, [raffle])
-
-    //Teste para ver se o estado esta atualizando
-
-    // useEffect(() => {
-
-    //     console.log(newRaffleTitle)
-    //     console.log(newCategories)
-    //     console.log(newItems)
-
-    // }, [newRaffleTitle, newCategories, newItems])
-
-    // useEffect(() => {
-
-    //     console.log(newItems)
-
-    // }, [newItems])
+    }, [raffle])
 
     const handleTitle = (e) => {
 
@@ -115,8 +97,6 @@ function UptadeRaffle() {
             [index]: value
 
         }))
-
-        // console.log(newCategories)
 
     }//OK
 
@@ -142,7 +122,7 @@ function UptadeRaffle() {
 
                     if (item.id_category == deleteCat[0]) {
 
-                        item.name = ' '
+                        item.name = 'deleteItem'
 
                     }
 
@@ -179,13 +159,6 @@ function UptadeRaffle() {
 
             }
 
-            {// CONSOLES TESTE
-
-                // console.log(deleteCat) ok
-
-                // console.log(key) oK
-            }
-
         }
 
         else {
@@ -212,7 +185,6 @@ function UptadeRaffle() {
             ])
 
         }
-
 
     }//OK
 
@@ -261,8 +233,6 @@ function UptadeRaffle() {
 
         }
 
-        // console.log(newItems)
-
     } //OK
 
     const removeItem = (e) => {
@@ -299,15 +269,16 @@ function UptadeRaffle() {
 
         const validNewCat = solidItems.some(item => item.id_category === "NewCategory")
 
-        const solidCat = Object.entries(newCategories).filter(cat => cat[1] !== 'DeleteCat')
+        const solidCat = Object.fromEntries(Object.entries(newCategories)
+                                                   .filter(([key, value]) =>  key !== "NewCategory" || value !== 'DeleteCat'))
 
-        // console.log(solidCat)
+        console.log(solidCat)
 
         if (validNewCat) {
 
             // Object.value(newCategories) = ['Alunos', '']
 
-            const validName = Object.values(newCategories)
+            const validName = Object.values(solidCat)
 
             validName.map((nameCat) => {
 
@@ -345,25 +316,18 @@ function UptadeRaffle() {
                     ...prev,
 
                     raffleTitle: newRaffleTitle.toUpperCase(),
-                    categories: newCategories,
+                    categories: solidCat,
                     items: solidItems
 
                 }))
 
-                console.log(raffle)
-
-
-
             }
-
 
         }
 
         else {
 
-            console.log(typeof newRaffleTitle)
-
-            const namesCat = Object.values(newCategories)
+            const namesCat = Object.values(solidCat)
 
             if (newRaffleTitle.trim() === '') {
 
@@ -388,7 +352,7 @@ function UptadeRaffle() {
                     ...prev,
 
                     raffleTitle: newRaffleTitle.toUpperCase(),
-                    categories: newCategories,
+                    categories: solidCat,
                     items: solidItems
 
                 }))
@@ -397,7 +361,7 @@ function UptadeRaffle() {
 
         }
 
-    } //OK (eu acho)
+    } //OK
 
     return (
 
@@ -420,6 +384,7 @@ function UptadeRaffle() {
                                 functioAddItem={handleItem}
                                 functioRevItem={removeItem}
                                 itemsCat={newItems}
+                                type={'update'}
                             />
 
                         )

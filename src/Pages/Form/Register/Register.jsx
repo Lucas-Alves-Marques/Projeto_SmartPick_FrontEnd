@@ -204,6 +204,7 @@ function Register() {
                         functioAddItem={handleItem} 
                         functioRevItem={removeItem}
                         itemsCat={''}
+                        type={'resgister'}
                         />)
 
         })
