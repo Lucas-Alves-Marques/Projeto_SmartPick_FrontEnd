@@ -4,12 +4,13 @@ import axios from "axios";
 import Card from "./Card_List/Card_List";
 import ContainerRaffle from "../../Layout/Container/ContainerRaffle";
 
-
 function Listagem() {
 
   const [registeredRaffle, setRegisteredRaffle] = useState([])
 
   const [message, setMessage] = useState('')
+
+  const [deleteMsg, setdDeleteMsg] = useState(false)
 
   useEffect(() => {
 
@@ -45,6 +46,15 @@ function Listagem() {
 
   }, []);
 
+  const deleteRaffle = async (id_raffle) => {
+
+    setdDeleteMsg(true)
+
+    await axios.delete(`http://localhost:3000/api/raffle/deleteRaffle/${id_raffle}`)
+
+    console.log(id_raffle)
+
+  }
 
   return (
 
@@ -69,7 +79,7 @@ function Listagem() {
 
               <ContainerRaffle>
 
-                <Card raffle={raffle}/>
+                <Card raffle={raffle} deleteFunction={deleteRaffle}/>
 
               </ContainerRaffle>
 
@@ -81,8 +91,21 @@ function Listagem() {
 
       }
 
+      {deleteMsg &&
+
+        <div className={Style.backgroundMSG}>
+
+          <h1>Sorteio Deletado</h1>
+
+          <button onClick={() => {setdDeleteMsg(false); window.location.reload()}}>OK</button>
+
+        </div >
+
+      }
+
 
     </div >
+
   );
 }
 

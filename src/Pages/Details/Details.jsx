@@ -17,6 +17,8 @@ const Details = () => {
 
     const [raffleSeleted, setRaffleSeleted] = useState({});
 
+    const [deleteMsg, setdDeleteMsg] = useState(false)
+
     useEffect(() => {
 
         try {
@@ -39,18 +41,28 @@ const Details = () => {
 
     }, [id_raffle])
 
+    const deleteRaffle = async (id_raffle) => {
+
+        setdDeleteMsg(true)
+
+        await axios.delete(`http://localhost:3000/api/raffle/deleteRaffle/${id_raffle}`)
+
+        console.log(id_raffle)
+
+    }
+
     const { title, categories, items } = raffleSeleted;
 
     //teste de separação dos arrays
 
-    useEffect(()=>{
+    // useEffect(() => {
 
-        console.log(title)
-        console.log(categories)
-        console.log(items)
+    //     console.log(title)
+    //     console.log(categories)
+    //     console.log(items)
 
 
-    }, [title])
+    // }, [title])
 
     const navigate = useNavigate();
 
@@ -88,12 +100,24 @@ const Details = () => {
 
                     <Return onClick={() => { navigateTo('/listagem', '') }} />
                     <Dices />
-                    <Pencil onClick={() => { navigateTo('/uptade', id_raffle ) }} />
-                    <Trash />
+                    <Pencil onClick={() => { navigateTo('/uptade', id_raffle) }} />
+                    <Trash onClick={() => { deleteRaffle(id_raffle) }} />
 
                 </div>
 
             </div>
+
+            {deleteMsg &&
+
+                <div className={Style.backgroundMSG}>
+
+                    <h1>Sorteio Deletado</h1>
+
+                    <button onClick={() => { setdDeleteMsg(false); navigateTo('/listagem','') }}>OK</button>
+
+                </div >
+
+            }
 
         </div>
 
