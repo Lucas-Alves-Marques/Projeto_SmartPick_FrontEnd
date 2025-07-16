@@ -12,19 +12,19 @@ function Register() {
     categories: [],
     items: {}
 
-  })
+  });
 
-  const [newRaffleTitle, setNewRaffleTitle] = useState('')
+  const [newRaffleTitle, setNewRaffleTitle] = useState('');
 
-  const [newCategories, setNewCategories] = useState([''])
+  const [newCategories, setNewCategories] = useState(['']);
 
-  const [newItems, setNewItems] = useState({})
+  const [newItems, setNewItems] = useState({});
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
-  const [btnMessage, setBtnMessage] = useState('')
+  const [btnMessage, setBtnMessage] = useState('');
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleItem = (e) => {
 
@@ -32,9 +32,7 @@ function Register() {
 
     setNewItems({ ...newItems, [e.target.id]: e.target.value })
 
-    // console.log(newItems)
-
-  }
+  };
 
   const removeItem = (cate, nitem) => {
 

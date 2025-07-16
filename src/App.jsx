@@ -8,10 +8,10 @@ import Listagem from "./Pages/Listagem/Listagem";
 import Details from './Pages/Details/Details'
 import Footer from "./Layout/Footer/Footer";
 import Uptade from "./Pages/Form/Uptade/UptadeRaffle";
-
+import Raffle from "./Pages/Raffle/Raffle";
 
 function App() {
-  
+
   return (
 
     <div className={style.body}>
@@ -26,22 +26,24 @@ function App() {
 
             <Route path="/" element={<Home />} />
 
-            <Route path="/cadastro" element={<Register />} />
+            <Route path="/register" element={<Register />} />
 
-            <Route path="/listagem" element={<Listagem />} />
+            <Route path="/raffle/list" element={<Listagem />} />
 
-            <Route path="/info_card/:id_raffle" element={<Details />} />
+            <Route path="/raffle/prizeDraw/:id_raffle" element={<Raffle />} />
 
-            <Route path="/uptade/:id_raffle" element={<Uptade />} />
+            <Route path="/raffle/uptade/:id_raffle" element={<Uptade />} />
 
+            <Route path="/raffle/info_card/:id_raffle" element={<Details />} />
 
           </Routes>
 
         </Container>
-          
-        <Footer/>
-        
+
+        <Footer />
+
       </BrowserRouter>
+
     </div>
   );
 }

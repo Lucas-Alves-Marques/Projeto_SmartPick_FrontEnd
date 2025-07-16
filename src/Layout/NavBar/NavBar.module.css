@@ -20,19 +20,18 @@
     color: white;
     padding: 1vh;
     text-decoration: none;
+    cursor: pointer;
 }
 
-a {
-    text-decoration: none;
-}
 
-.item_marcado{
-    
+.item_marcado {
     margin: 0vh 5vh;
     color: white;
     padding: 1vh;
     text-decoration: none;
     box-shadow: 0px 2.5px 0px rgb(255, 255, 255);
+    cursor: pointer;
+
 }
 
 .navegacao ul li:hover {

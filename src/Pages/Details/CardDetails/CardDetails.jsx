@@ -1,13 +1,6 @@
-import { useEffect } from 'react';
 import Style from './CardDetails.module.css'
 
 function CardDetails({ cat, items, position }) {
-
-    // useEffect(() => {
-
-    //     console.log(position)
-
-    // }, [items])
 
     return (
 

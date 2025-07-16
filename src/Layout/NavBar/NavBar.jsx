@@ -1,33 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import Style from './NavBar.module.css'
+import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import Style from './NavBar.module.css';
 
 function NavBar() {
 
   const location = useLocation().pathname;
 
+  const navigate = useNavigate();
+
   return (
+
     <nav className={Style.navegacao}>
+
       <ul>
-        <Link to='/'>
-          <li className={location === '/' ? Style.item_marcado : Style.item}>
-            Home
-          </li>
-        </Link>
 
-        <Link to='/cadastro'>
-          <li className={location === '/cadastro' ? Style.item_marcado : Style.item}>
-            Cadastrar
-          </li>
-        </Link>
+        <li className={location === '/' ? Style.item_marcado : Style.item}
+          onClick={() => { navigate('/') }} >
 
-        <Link to='/listagem'>
-          <li className={location.includes('/listagem') || location.includes('/info_card') || location.includes('/uptade')   ? Style.item_marcado : Style.item}>
-            Sorteios
-          </li>
-        </Link>
+          Home
+
+        </li>
+        <li className={location === '/register' ? Style.item_marcado : Style.item}
+          onClick={() => { navigate('/register') }} >
+
+          Cadastrar
+
+        </li>
+        <li className={location.includes('/raffle') ? Style.item_marcado : Style.item}
+          onClick={() => { navigate('/raffle/list') }}>
+
+          Sorteios
+
+        </li>
+
       </ul>
+
     </nav>
   )
 

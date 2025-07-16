@@ -5,17 +5,10 @@ import { LuDices as Dices } from "react-icons/lu";
 import { RiInformation2Fill as Info } from "react-icons/ri";
 import defaultImg from '../../../Img/Fundo da Listagem.jpg'
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const Card = ({ raffle, deleteFunction }) => {
 
     const navigate = useNavigate();
-
-    const navigateTo = (url) => {
-
-        navigate(`${url}/${raffle.id_raffle}`)
-    }
-
 
     return (
 
@@ -29,10 +22,18 @@ const Card = ({ raffle, deleteFunction }) => {
 
                 <div className={Style.icons}>
 
-                    <Dices />
-                    <Pencil onClick={() => { navigateTo('/uptade') }} />
-                    <Trash onClick={() => {deleteFunction(raffle.id_raffle) }} />
-                    <Info onClick={() => { navigateTo('/info_card') }} />
+                    <Dices
+                        onClick={() => { navigate(`/raffle/prizeDraw/${raffle.id_raffle}`) }}
+                    />
+                    <Pencil
+                        onClick={() => { navigate(`/raffle/uptade/${raffle.id_raffle}`) }}
+                    />
+                    <Trash
+                        onClick={() => { deleteFunction(raffle.id_raffle) }}
+                    />
+                    <Info
+                        onClick={() => { navigate(`/raffle/info_card/${raffle.id_raffle}`) }}
+                    />
 
                 </div>
 

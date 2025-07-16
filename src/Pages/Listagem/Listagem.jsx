@@ -6,43 +6,42 @@ import ContainerRaffle from "../../Layout/Container/ContainerRaffle";
 
 function Listagem() {
 
-  const [registeredRaffle, setRegisteredRaffle] = useState([])
+  const [registeredRaffle, setRegisteredRaffle] = useState([]);
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
-  const [deleteMsg, setdDeleteMsg] = useState(false)
+  const [deleteMsg, setdDeleteMsg] = useState(false);
 
-  useEffect(() => {
+  const getRaffles = async () => {
 
-    const getRaffles = async () => {
+    try {
 
-      try {
+      const raffles = await axios.get('http://localhost:3000/api/raffle/listRaffleName')
 
-        const raffles = await axios.get('http://localhost:3000/api/raffle/listRaffleName')
+      if (raffles.data.message.length > 0) {
 
-        if (raffles.data.message.length > 0) {
+        setRegisteredRaffle(raffles.data.message)
 
-          setRegisteredRaffle(raffles.data.message)
+      }
 
-        }
+      else {
 
-        else {
-
-          setMessage('Não há sorteios cadastrados')
-
-        }
-
-      } catch (err) {
-
-        console.log(err)
         setMessage('Não há sorteios cadastrados')
 
       }
 
+    } catch (err) {
+
+      console.log(err)
+      setMessage('Não há sorteios cadastrados')
+
     }
 
-    getRaffles()
+  };
 
+  useEffect(() => {
+
+    getRaffles()
 
   }, []);
 
@@ -54,7 +53,7 @@ function Listagem() {
 
     console.log(id_raffle)
 
-  }
+  };
 
   return (
 
@@ -79,7 +78,7 @@ function Listagem() {
 
               <ContainerRaffle>
 
-                <Card raffle={raffle} deleteFunction={deleteRaffle}/>
+                <Card raffle={raffle} deleteFunction={deleteRaffle} />
 
               </ContainerRaffle>
 
@@ -97,7 +96,7 @@ function Listagem() {
 
           <h1>Sorteio Deletado</h1>
 
-          <button onClick={() => {setdDeleteMsg(false); window.location.reload()}}>OK</button>
+          <button onClick={() => { setdDeleteMsg(false); getRaffles() }}>OK</button>
 
         </div >
 

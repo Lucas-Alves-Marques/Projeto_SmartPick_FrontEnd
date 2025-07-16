@@ -54,9 +54,5 @@ span{
     width: 20vh;
     margin: auto;
     border: 0.4vh solid white;
-
-}
-
-.btn a{
-    color: white;
+    cursor: pointer;
 }
