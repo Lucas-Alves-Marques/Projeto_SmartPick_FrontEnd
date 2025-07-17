@@ -16,7 +16,7 @@ const Card = ({ raffle, deleteFunction }) => {
 
             <div className={Style.background} >
 
-                <img src={defaultImg} />
+                <img src={defaultImg} alt='Imagem com um ponto de interrogação'/>
 
                 <h1>{raffle.name}</h1>
 
@@ -47,5 +47,6 @@ const Card = ({ raffle, deleteFunction }) => {
     )
 
 };
+
 
 export default Card;

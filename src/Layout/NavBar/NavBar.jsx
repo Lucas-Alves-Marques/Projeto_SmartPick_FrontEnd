@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Style from './NavBar.module.css';
 
@@ -38,6 +38,6 @@ function NavBar() {
     </nav>
   )
 
-}
+};
 
-export default NavBar
+export default NavBar;

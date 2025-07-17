@@ -17,7 +17,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
     useEffect(() => {
 
-        if (itemsCat != []) {
+        if (itemsCat.length > 1) {
 
             const ItemsCat = itemsCat.filter(item => item.id_category == seletedCat[0])
 
@@ -43,7 +43,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         }
 
-    }, [items])
+    }, [items, itemsCat])
 
     const addItem = (e) => {
 
@@ -59,6 +59,8 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                     return item
                 }
+
+                return null;
 
             })
 
@@ -99,6 +101,8 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                     }
 
+                    return null;
+
                 })
 
             }
@@ -115,9 +119,9 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                 for (const item in items) {
 
-                    const countItem = 0;
+                    let countItem = 0;
 
-                    if (typeof item.id_item == 'number' && item.name === 'deleteItem') {
+                    if (typeof item.id_item == 'number' && item.name == 'deleteItem') {
 
                         item.name = `Item ${countItem + 1}`
 
@@ -127,7 +131,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
                     else {
 
-                        if (item.name === 'deleteItem') {
+                        if (item.name == 'deleteItem') {
 
                             item.name = `Item ${count}`
 
@@ -264,7 +268,7 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
 
     };
-
+    
     return (
 
         <form className={style.form}>

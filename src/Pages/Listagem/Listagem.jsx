@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Style from './Listagem.module.css';
 import axios from "axios";
 import Card from "./Card_List/Card_List";

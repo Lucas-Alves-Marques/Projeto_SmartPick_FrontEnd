@@ -54,6 +54,7 @@ const Details = () => {
 
     }, [id_raffle]);
 
+
     return (
 
         <div className={Style.body}>
@@ -61,7 +62,7 @@ const Details = () => {
             <div className={Style.iniData}>
 
                 <h1>{title}</h1>
-                <img src={defaultImg} />
+                <img src={defaultImg} alt='Imagem com um ponto de interrogação'/>
 
             </div>
             <div className={Style.listCat}>

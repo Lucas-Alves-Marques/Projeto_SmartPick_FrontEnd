@@ -250,7 +250,7 @@ function Register() {
 
                 console.log(message)
 
-                navigate('/listagem');
+                navigate('/raffle/list');
 
               } else {
 
