@@ -61,32 +61,26 @@
 }
 
 .backgroundMSG {
-    margin: auto;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    padding: 3vh 3vh 6vh 3vh;
-    width: 20vh;
-    height: 10vh;
+    padding: 1rem;
     text-align: center;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
     color: white;
-    background-color: #004370c5;
-    backdrop-filter: blur(3px);
-    border-radius: 5vh;
-    border: 0.5vh solid white;
+    background-color: #004370e3;
+    border-radius: 2rem;
+    border: 3px solid white;
 }
 
-.backgroundMSG h1 {
-    margin-bottom: 2vh;
-
-}
 
 .backgroundMSG button {
-
+    margin: 1rem;
     padding: 1vh 2vh;
-    margin-bottom: 2vh;
     border-radius: 1.5vh;
     border: none;
     cursor: pointer;

@@ -30,11 +30,6 @@ function UptadeRaffle() {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-
-        console.log(newCategories)
-
-    }, [newCategories])
 
     //Recupera os dados do Banco
 
@@ -272,8 +267,6 @@ function UptadeRaffle() {
         const solidCat = Object.fromEntries(Object.entries(newCategories)
                                                    .filter(([key, value]) =>  key !== "NewCategory" || value !== 'DeleteCat'))
 
-        console.log(solidCat)
-
         if (validNewCat) {
 
             // Object.value(newCategories) = ['Alunos', '']
@@ -398,10 +391,6 @@ function UptadeRaffle() {
 
             <div className={Style.bnts}>
 
-                {
-                    //['Alunos', 'Slides']
-                }
-
                 {Object.keys(newCategories).length > 1 && Object.values(newCategories).every(value => value.trim() !== 'DeleteCat') ?
 
                     <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); handleCategory() }}>Sorteio Simples</button>
@@ -413,7 +402,7 @@ function UptadeRaffle() {
                 <>
 
                     <button className={Style.btnSave} onClick={saveRaffle}>Salvar</button>
-                    <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); navigate('/listagem') }}>Voltar</button>
+                    <button className={Style.bntDefault} onClick={(e) => { e.preventDefault(); navigate('/raffle/list') }}>Voltar</button>
 
                 </>
 
@@ -430,7 +419,7 @@ function UptadeRaffle() {
 
                             if (message === 'Sorteio Salvo') {
 
-                                navigate('/listagem');
+                                navigate('/raffle/list');
 
                             } else {
 

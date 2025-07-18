@@ -10,7 +10,9 @@ function Listagem() {
 
   const [message, setMessage] = useState('');
 
-  const [deleteMsg, setdDeleteMsg] = useState(false);
+  const [deleteMsg, setDeleteMsg] = useState('');
+
+  const [id_Del, setId_Del] = useState(null);
 
   const getRaffles = async () => {
 
@@ -45,13 +47,33 @@ function Listagem() {
 
   }, []);
 
-  const deleteRaffle = async (id_raffle) => {
+  const confirmDelete = (id_raffle) => {
 
-    setdDeleteMsg(true)
+    setDeleteMsg('Deseja mesmo excluir o sorteio?');
 
-    await axios.delete(`http://localhost:3000/api/raffle/deleteRaffle/${id_raffle}`)
+    setId_Del(id_raffle);
 
-    console.log(id_raffle)
+  };
+
+  const deleteRaffle = async (e) => {
+
+    e.preventDefault();
+
+    setDeleteMsg('Sorteio Deletado');
+
+    await axios.delete(`http://localhost:3000/api/raffle/deleteRaffle/${id_Del}`);
+
+
+  };
+
+  const clearDelete = (e) => {
+
+    e.preventDefault();
+
+    setDeleteMsg('');
+
+    setId_Del(null);
+
 
   };
 
@@ -78,7 +100,7 @@ function Listagem() {
 
               <ContainerRaffle>
 
-                <Card raffle={raffle} deleteFunction={deleteRaffle} />
+                <Card raffle={raffle} deleteFunction={confirmDelete} />
 
               </ContainerRaffle>
 
@@ -94,9 +116,25 @@ function Listagem() {
 
         <div className={Style.backgroundMSG}>
 
-          <h1>Sorteio Deletado</h1>
+          <h3>{deleteMsg}</h3>
 
-          <button onClick={() => { setdDeleteMsg(false); getRaffles() }}>OK</button>
+          {deleteMsg.includes("?")
+
+            ?
+
+            <div>
+
+              <button onClick={(e) => { deleteRaffle(e) }}>Sim</button>
+              <button onClick={(e) => { clearDelete(e) }}>Não</button>
+
+            </div>
+
+            :
+
+            <button onClick={() => { setDeleteMsg(''); getRaffles() }}>OK</button>
+
+          }
+
 
         </div >
 

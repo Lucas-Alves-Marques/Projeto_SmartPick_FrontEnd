@@ -253,7 +253,6 @@ function Form({ handleTitleC, category, functioAddItem, functioRevItem, itemsCat
 
         setItems(updatedItems);
 
-        console.log(items)
 
         functioAddItem({
 

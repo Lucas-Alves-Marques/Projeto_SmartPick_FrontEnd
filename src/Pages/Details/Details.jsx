@@ -16,19 +16,35 @@ const Details = () => {
 
     const [raffleSeleted, setRaffleSeleted] = useState({});
 
-    const [deleteMsg, setdDeleteMsg] = useState(false);
+    const [deleteMsg, setDeleteMsg] = useState('');
 
     const { title, categories, items } = raffleSeleted;
 
     const navigate = useNavigate();
 
-    const deleteRaffle = async (id_raffle) => {
+    const confirmDelete = () => {
 
-        setdDeleteMsg(true)
+        setDeleteMsg('Deseja mesmo excluir o sorteio?');
+
+    };
+
+    const deleteRaffle = async (e) => {
+
+        e.preventDefault();
+
+        setDeleteMsg('Sorteio Deletado')
 
         await axios.delete(`http://localhost:3000/api/raffle/deleteRaffle/${id_raffle}`)
 
-        console.log(id_raffle)
+
+    };
+
+    const clearDelete = (e) => {
+
+        e.preventDefault();
+
+        setDeleteMsg('');
+
 
     };
 
@@ -55,6 +71,7 @@ const Details = () => {
     }, [id_raffle]);
 
 
+
     return (
 
         <div className={Style.body}>
@@ -62,7 +79,7 @@ const Details = () => {
             <div className={Style.iniData}>
 
                 <h1>{title}</h1>
-                <img src={defaultImg} alt='Imagem com um ponto de interrogação'/>
+                <img src={defaultImg} alt='Imagem com um ponto de interrogação' />
 
             </div>
             <div className={Style.listCat}>
@@ -89,10 +106,10 @@ const Details = () => {
                         onClick={() => { navigate(`/raffle/prizeDraw/${id_raffle}`) }}
                     />
                     <Pencil
-                        onClick={() => { navigate(`/raffle/uptade/${id_raffle}`)  }}
+                        onClick={() => { navigate(`/raffle/uptade/${id_raffle}`) }}
                     />
                     <Trash
-                        onClick={() => { deleteRaffle(id_raffle) }}
+                        onClick={() => { confirmDelete() }}
                     />
 
                 </div>
@@ -103,9 +120,25 @@ const Details = () => {
 
                 <div className={Style.backgroundMSG}>
 
-                    <h1>Sorteio Deletado</h1>
+                    <h3>{deleteMsg}</h3>
 
-                    <button onClick={() => { setdDeleteMsg(false); navigate('/raffle/list')  }}>OK</button>
+                    {deleteMsg.includes("?")
+
+                        ?
+
+                        <div className={Style.alingBtns}>
+
+                            <button onClick={(e) => { deleteRaffle(e) }}>Sim</button>
+                            <button onClick={(e) => { clearDelete(e) }}>Não</button>
+
+                        </div>
+
+                        :
+
+                        <button onClick={() => { setDeleteMsg(''); navigate('/raffle/list') }}>OK</button>
+
+                    }
+
 
                 </div >
 

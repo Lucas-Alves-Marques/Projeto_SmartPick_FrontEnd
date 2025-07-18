@@ -11,8 +11,24 @@
 
 .card ul{
      margin-top: 1vh;
+     max-height: 10rem;
+     overflow-y: auto;
+}
+
+.card ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card ul::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card ul::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 24, 46);
+    border-radius: 10px;
 }
 
 .card ul li{
+    margin: 1rem 0;
     list-style: none;
 }

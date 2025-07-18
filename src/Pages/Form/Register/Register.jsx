@@ -48,15 +48,12 @@ function Register() {
 
     }
 
-    // console.log(newItems)
 
   };
 
   const handleTitle = (e) => {
 
     setNewRaffleTitle(e.target.value)
-
-    // console.log(newRaffleTitle)
 
   }
 
@@ -73,8 +70,6 @@ function Register() {
 
     }
 
-    // console.log(newCategories)
-
   }
 
   const uptadeNameCategory = (index, value) => {
@@ -84,8 +79,6 @@ function Register() {
     uptade[index] = value
 
     setNewCategories(uptade)
-
-    // console.log(newCategories)
 
   }
 
@@ -128,10 +121,6 @@ function Register() {
 
       setBtnMessage('OK')
 
-      console.log(newItems)
-
-      console.log(validItems)
-
     }
 
     else {
@@ -158,8 +147,6 @@ function Register() {
       try {
 
         await axios.post(' http://localhost:3000/api/raffle/createRaffle', raffle)
-
-        // console.log(raffle)
 
         setMessage('Sorteio Cadastrado')
 
@@ -247,8 +234,6 @@ function Register() {
             onClick={(e) => {
 
               if (message === 'Sorteio Cadastrado') {
-
-                console.log(message)
 
                 navigate('/raffle/list');
 
